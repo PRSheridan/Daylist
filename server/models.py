@@ -36,7 +36,7 @@ class Calendar(db.Model, SerializerMixin):
     __tablename__ = 'calendars'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, unique=True)
+    title = db.Column(db.String, unique=True, nullable=False)
 
     #relationships
     #many users have many calendars
@@ -54,9 +54,9 @@ class Note(db.Model, SerializerMixin):
     __tablename__ = 'notes'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
+    date = db.Column(db.Date, nullable=False)
+    title = db.Column(db.String, nullable=False)
     content = db.Column(db.String)
-    date = db.Column(db.Date)
 
     #relationships
     #one calendar has many notes
@@ -66,8 +66,11 @@ class Reminder(db.Model, SerializerMixin):
     __tablename__ = 'reminders'
 
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String)
+    content = db.Column(db.String, nullable=False)
+    date = db.Column(db.Date, nullable=False)
     repeating = db.Column(db.String)
 
     #relationships
     #one calendar has many reminders
+
+    ##CREATE RELATIONSHIPS AND UPDATE DB
