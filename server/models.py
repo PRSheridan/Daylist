@@ -77,8 +77,8 @@ class Reminder(db.Model, SerializerMixin):
     __tablename__ = 'reminders'
 
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String, nullable=False)
     date = db.Column(db.Date, nullable=False)
+    content = db.Column(db.String, nullable=False)
     repeating = db.Column(db.String)
 
     #relationships: one calendar has many reminders
