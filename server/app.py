@@ -17,6 +17,36 @@ from models import User, Calendar, Note, Reminder
 def index():
     return '<h1>Project Server</h1>'
 
+class CheckSession(Resource):
+    pass
+
+class Signup(Resource):
+    pass
+
+class Login(Resource):
+    pass
+
+class Logout(Resource):
+    pass
+
+class User(Resource):
+    pass
+
+class UserByID(Resource):
+    pass
+
+class Calendar(Resource):
+    pass
+
+class CalendarByID(Resource):
+    pass
+
+class NoteByID(Resource):
+    pass
+
+class ReminderByID(Resource):
+    pass
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
