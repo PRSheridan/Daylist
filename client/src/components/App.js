@@ -19,11 +19,14 @@ function App() {
 
   return (
     <>
-      <header>DayTracker</header>
-      <NavBar/>
-      <Route path="/">
-        <CalendarList />
-      </Route>
+      <NavBar user={user} setUser={setUser}/>
+      <main>
+        <Switch>
+          <Route path="/">
+            <CalendarList />
+          </Route>
+        </Switch>
+      </main>
     </>
   )
 }
