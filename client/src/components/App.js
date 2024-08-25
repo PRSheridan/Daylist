@@ -1,8 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
+import Login from "./Login.js"
 
 function App() {
-  return <h1>Project Client</h1>;
+  const [user, setUser] = useState(null)
+
+  //CheckSession call
+  useEffect(() => {
+    fetch("/check_session")
+    .then((response) => {
+      if (response.ok) { response.json 
+      .then((user) => setUser(user));
+      }});
+  }, []);
+
+  if (!user) return <Login onLogin={setUser}/>
+
+  return (
+    <header>DayTracker</header>
+  )
 }
 
 export default App;
