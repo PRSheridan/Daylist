@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
-import Login from "../pages/Login.js"
-import CalendarList from "../pages/CalendarList.js"
+import Login from "./pages/Login.js";
+import CalendarList from "./pages/CalendarList.js"
 import NavBar from "./NavBar.js"
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
       <NavBar user={user} setUser={setUser}/>
       <main>
         <Switch>
-          <Route path="/">
+          <Route path="/calendar">
             <CalendarList />
           </Route>
         </Switch>

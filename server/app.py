@@ -62,7 +62,11 @@ class UserByID(Resource):
     pass
 
 class Calendar(Resource):
-    pass
+    def get(self):
+        if session['user_id']:
+            user = User.query.filter(User.id == session['user_id']).first().to_dict()
+            return user['calendars']
+        return {'error': '401 Unauthorized request'}, 401
 
 class CalendarByID(Resource):
     pass
@@ -76,6 +80,8 @@ class ReminderByID(Resource):
 
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(Calendar, '/calendar', endpoint='calendar')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

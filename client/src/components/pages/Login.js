@@ -10,7 +10,6 @@ function Login({onLogin}) {
 
     return (
         <>
-            <header>test</header>
             {showLogin ? (
                 <>
                     <LoginForm onLogin={onLogin} />
@@ -24,7 +23,7 @@ function Login({onLogin}) {
                 <>
                     <SignupForm onLogin={onLogin} />
                     <p>Already Have an Account? Sign in Here
-                    <button onClick={() => setShowLogin(false)}>
+                    <button onClick={() => setShowLogin(true)}>
                         Signup
                     </button>
                     </p>
