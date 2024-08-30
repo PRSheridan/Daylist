@@ -1,10 +1,10 @@
-from sqlalchemy_serializer import SerializerMixin
+#from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db, bcrypt
 
-class User(db.Model, SerializerMixin):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
         return f'<User {self.username}'
 
 
-class Calendar(db.Model, SerializerMixin):
+class Calendar(db.Model):
     __tablename__ = 'calendars'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -47,7 +47,7 @@ class Calendar(db.Model, SerializerMixin):
         return f'<User {self.title}'
 
 
-class User_Calendar(db.Model, SerializerMixin):
+class User_Calendar(db.Model):
     __tablename__ = 'user_calendars'
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
@@ -58,7 +58,7 @@ class User_Calendar(db.Model, SerializerMixin):
     calendar = db.relationship('Calendar', back_populates='users')
 
 
-class Note(db.Model, SerializerMixin):
+class Note(db.Model):
     __tablename__ = 'notes'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -73,7 +73,7 @@ class Note(db.Model, SerializerMixin):
         return f'<User {self.title, self.date}'
 
 
-class Reminder(db.Model, SerializerMixin):
+class Reminder(db.Model):
     __tablename__ = 'reminders'
 
     id = db.Column(db.Integer, primary_key=True)

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 
 function LoginForm({ onLogin }) {
     const [username, setUsername] = useState("")
@@ -6,25 +6,24 @@ function LoginForm({ onLogin }) {
     const [errors, setErrors] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
-    function handleSubmit(event) {
-        event.preventDefault()
-        setIsLoading(true)
+    function handleSubmit(e) {
+        e.preventDefault();
+        setIsLoading(true);
         fetch("/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ username, password}),
-        }).then((response) => {
-            setIsLoading(false);
-            if (response.ok) {
-                response.json()
-                .then((user) => onLogin(user));
-            } else {
-                response.json().then((err) => setErrors(err.errors));
-            }
-        })
-    }
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }).then((r) => {
+          setIsLoading(false);
+          if (r.ok) {
+            r.json().then((user) => onLogin(user));
+          } else {
+            r.json().then((err) => setErrors(err.errors));
+          }
+        });
+      }
 
     return (
         <form onSubmit={ handleSubmit }>
@@ -51,11 +50,6 @@ function LoginForm({ onLogin }) {
             </div>
             <div>
                 <button type="submit">{ isLoading ? "Loading..." : "Login" }</button>
-            </div>
-            <div>
-                {errors.map((err) => (
-                 <div key={err}>{err}</div>
-                ))}
             </div>
         </form>
     )

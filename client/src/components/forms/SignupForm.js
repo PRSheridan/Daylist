@@ -10,7 +10,7 @@ function SignupForm({ onLogin }) {
     function handleSubmit(event) {
         event.preventDefault()
         setIsLoading(true)
-        fetch('/login', {
+        fetch('/signup', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -61,12 +61,7 @@ function SignupForm({ onLogin }) {
                 />
             </div>
             <div>
-                <button type="submit">{ isLoading ? "Loading..." : "Login" }</button>
-            </div>
-            <div>
-                {errors.map((err) => (
-                 <div key={err}>{err}</div>
-                ))}
+                <button type="submit">{ isLoading ? "Loading..." : "Create account" }</button>
             </div>
         </form>
     )

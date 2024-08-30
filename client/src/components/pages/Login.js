@@ -24,7 +24,7 @@ function Login({onLogin}) {
                     <SignupForm onLogin={onLogin} />
                     <p>Already Have an Account? Sign in Here
                     <button onClick={() => setShowLogin(true)}>
-                        Signup
+                        Login
                     </button>
                     </p>
                 </>
