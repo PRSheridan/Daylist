@@ -28,8 +28,6 @@ class Signup(Resource):
         username = json.get('username')
         password = json.get('password')
         passwordConfirm = json.get('passwordConfirm')
-        print(username)
-        print(password, passwordConfirm)
 
         if password != passwordConfirm:
             return {'error': '401 Passwords do not match'}, 401
@@ -52,6 +50,7 @@ class Login(Resource):
         username = json.get('username')
         password = json.get('password')
         user = User.query.filter(User.username == username).first()
+        print(type(user))
 
         if user:
             if user.authenticate(password):
@@ -61,10 +60,11 @@ class Login(Resource):
         return {'error':'401 Unauthorized login'}, 401
 
 class Logout(Resource):
-    pass
-
-class UserByID(Resource):
-    pass
+    def delete(self):
+        if session['user_id']:
+            session['user_id'] = ''
+            return {}, 204
+        return {'error':'401 Unable to process request'}, 401
 
 class Calendar(Resource):
     def get(self):
@@ -72,6 +72,10 @@ class Calendar(Resource):
             user = User.query.filter(User.id == session['user_id']).first().to_dict()
             return user['calendars']
         return {'error': '401 Unauthorized request'}, 401
+    
+class NewCalendar(Resource):
+    def post(self):
+        pass
 
 class CalendarByID(Resource):
     pass
@@ -84,9 +88,11 @@ class ReminderByID(Resource):
 
 
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
-api.add_resource(Signup, '/signup', endpoint='signup')
-api.add_resource(Login, '/login', endpoint='login')
-api.add_resource(Calendar, '/calendar', endpoint='calendar')
+api.add_resource(Signup, '/signup')
+api.add_resource(Login, '/login')
+api.add_resource(Logout, '/logout')
+#api.add_resource(NewCalendar, '/new')
+api.add_resource(Calendar, '/', endpoint='calendar')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
