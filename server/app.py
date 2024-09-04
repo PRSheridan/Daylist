@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 # Local imports
 from config import app, db, api
-from models import User, Calendar, Note, Reminder
+from models import User, Calendar, User_Calendar, Note, Reminder
 
 @app.route('/')
 def index():
@@ -50,7 +50,6 @@ class Login(Resource):
         username = json.get('username')
         password = json.get('password')
         user = User.query.filter(User.username == username).first()
-        print(type(user))
 
         if user:
             if user.authenticate(password):
@@ -75,7 +74,25 @@ class Calendar(Resource):
     
 class NewCalendar(Resource):
     def post(self):
-        pass
+        if session['user_id']:
+            user = User.query.filter(User.id == session['user_id']).first().to_dict()
+            json = request.get_json()
+            title = json['title']
+
+        try:
+            calendar = Calendar(title = title)
+            relationship = User_Calendar(
+                user_id = session['user_id'],
+                calendar_id = calendar.id)
+            
+            db.session.add(calendar, relationship)
+            db.session.commit()
+
+            return calendar.to_dict()
+        
+        except IntegrityError:
+            return {'error':'422 cannot process request'}, 422
+
 
 class CalendarByID(Resource):
     pass
@@ -87,12 +104,12 @@ class ReminderByID(Resource):
     pass
 
 
-api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(CheckSession, '/check_session')
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
-#api.add_resource(NewCalendar, '/new')
-api.add_resource(Calendar, '/', endpoint='calendar')
+api.add_resource(NewCalendar, '/new_calendar')
+api.add_resource(Calendar, '/calendars')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

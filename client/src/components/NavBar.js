@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 function NavBar({ user, setUser }) {
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -12,9 +11,19 @@ function NavBar({ user, setUser }) {
   }
 
   return (
-    <button onClick={handleLogoutClick}>
-    Logout
-    </button>
+    <>
+      <button>
+        <Link to="/calendars">Calendars</Link>
+      </button>
+      <nav>
+        <button>
+          <Link to="/new_calendar">+ New Calendar</Link>
+        </button>
+        <button onClick={handleLogoutClick}>
+        Logout
+        </button>
+      </nav>
+    </>
   )
 }
 
