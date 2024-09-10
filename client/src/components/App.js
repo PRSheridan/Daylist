@@ -27,7 +27,7 @@ function App() {
           <Route exact path="/calendars">
             <CalendarList user={user}/>
           </Route>
-          <Route exact path="/new">
+          <Route exact path="/new_calendar">
             <NewCalendar user={user}/>
           </Route>
         </Switch>

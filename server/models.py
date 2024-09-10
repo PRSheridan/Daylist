@@ -7,6 +7,8 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
+    serialize_rules = ('-calendars.user',)
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
@@ -35,8 +37,10 @@ class User(db.Model, SerializerMixin):
 class Calendar(db.Model, SerializerMixin):
     __tablename__ = 'calendars'
 
+    serialize_rules = ('-users.calendar',)
+
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, unique=True, nullable=False)
+    title = db.Column(db.String, nullable=False)
 
     #relationships: many users have many calendars, one calendar has many notes
     users = db.relationship('User_Calendar', back_populates='calendar')
@@ -50,12 +54,17 @@ class Calendar(db.Model, SerializerMixin):
 class User_Calendar(db.Model, SerializerMixin):
     __tablename__ = 'user_calendars'
 
+    serialize_rules = ('-calendars.user_calendar', '-users.user_calendars')
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'), primary_key=True)
 
     #relationships: connect users and calendars
     user = db.relationship('User', back_populates='calendars')
     calendar = db.relationship('Calendar', back_populates='users')
+
+    def __repr__(self):
+        return f'<User_Calendar {self.calendar_id}'
 
 
 class Note(db.Model, SerializerMixin):

@@ -4,6 +4,9 @@ import * as yup from "yup"
 
 function LoginForm({ onLogin }) {
 
+  const [errors, setErrors] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
   const formSchema = yup.object().shape({
     username: yup.string().required("Must enter username"),
     password: yup.string().required("Must enter a password"),
@@ -28,9 +31,6 @@ function LoginForm({ onLogin }) {
       )
     },
   })
-
-  const [errors, setErrors] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
 
   return (
       <form onSubmit={ formik.handleSubmit }>

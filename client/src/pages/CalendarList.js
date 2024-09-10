@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NewCalendar from "./NewCalendar";
+import Calendar from "../components/Calendar"
 
 function CalendarList({ user }) {
-    const [calendars, setCalendars] = useState(null)
+    const [calendars, setCalendars] = useState([])
 
     useEffect(() => {
         fetch("/calendars")
-        .then((response) => {
-          if (response.ok) { 
-            response.json().then((calendars) => setCalendars(calendars)) }
-        })
-      }, [])
+        .then((response) => response.json())
+        .then(setCalendars)
+        console.log(calendars)
+    }, [])
     
     return (
         <>
             <div>Calendars:
-//populate calendars
+                <>{calendars.length > 0 ? (
+                    calendars.map((calendar) => (
+                        <h2>{calendar}</h2>
+                    ))
+                ) : (
+                    <div>no calendars found</div>
+                )}</>
             </div>
-            <button as={Link} to="/new">
-            + New calendar
+            <button>
+                <Link to="/new_calendar">+ New Calendar</Link>
             </button>
         </>
     )

@@ -65,14 +65,17 @@ class Logout(Resource):
             return {}, 204
         return {'error':'401 Unable to process request'}, 401
 
-class Calendar(Resource):
+class CalendarIndex(Resource):
     def get(self):
         if session['user_id']:
-            user = User.query.filter(User.id == session['user_id']).first().to_dict()
-            return user['calendars']
+            calendars = []
+            for calendar_id in User_Calendar.query.filter(User_Calendar.user_id == session['user_id']).all():
+                calendars.append(Calendar.query.filter(Calendar.id == calendar_id).first().to_dict())
+
+            return calendars
+
         return {'error': '401 Unauthorized request'}, 401
     
-class NewCalendar(Resource):
     def post(self):
         if session['user_id']:
             user = User.query.filter(User.id == session['user_id']).first().to_dict()
@@ -81,14 +84,21 @@ class NewCalendar(Resource):
 
         try:
             calendar = Calendar(title = title)
-            relationship = User_Calendar(
-                user_id = session['user_id'],
-                calendar_id = calendar.id)
-            
-            db.session.add(calendar, relationship)
+
+            db.session.add(calendar)
             db.session.commit()
 
-            return calendar.to_dict()
+            calendar = Calendar.query.filter(Calendar.title == title).first().to_dict()
+
+            relationship = User_Calendar(
+                user_id = session['user_id'],
+                calendar_id = calendar["id"],
+            )
+
+            db.session.add(relationship)
+            db.session.commit()
+
+            return calendar, 201
         
         except IntegrityError:
             return {'error':'422 cannot process request'}, 422
@@ -108,8 +118,7 @@ api.add_resource(CheckSession, '/check_session')
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
-api.add_resource(NewCalendar, '/new_calendar')
-api.add_resource(Calendar, '/calendars')
+api.add_resource(CalendarIndex, '/calendars')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
