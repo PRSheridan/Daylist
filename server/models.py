@@ -7,7 +7,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-calendars.user',)
+    serialize_rules = ('-user_calendars.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -37,7 +37,7 @@ class User(db.Model, SerializerMixin):
 class Calendar(db.Model, SerializerMixin):
     __tablename__ = 'calendars'
 
-    serialize_rules = ('-users.calendar',)
+    serialize_rules = ('-users.calendar', '-user_calendars.calendar',)
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -54,7 +54,7 @@ class Calendar(db.Model, SerializerMixin):
 class User_Calendar(db.Model, SerializerMixin):
     __tablename__ = 'user_calendars'
 
-    serialize_rules = ('-calendars.user_calendar', '-users.user_calendars')
+    serialize_rules = ('-calendars.user', '-users.calendar')
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'), primary_key=True)

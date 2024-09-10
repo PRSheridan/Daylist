@@ -69,8 +69,8 @@ class CalendarIndex(Resource):
     def get(self):
         if session['user_id']:
             calendars = []
-            for calendar_id in User_Calendar.query.filter(User_Calendar.user_id == session['user_id']).all():
-                calendars.append(Calendar.query.filter(Calendar.id == calendar_id).first().to_dict())
+            #for calendar_id in User_Calendar.query.filter(User_Calendar.user_id == session['user_id']).all():
+            #    calendars.append(Calendar.query.filter(Calendar.id == calendar_id).first().to_dict())
 
             return calendars
 
@@ -78,7 +78,6 @@ class CalendarIndex(Resource):
     
     def post(self):
         if session['user_id']:
-            user = User.query.filter(User.id == session['user_id']).first().to_dict()
             json = request.get_json()
             title = json['title']
 
@@ -103,9 +102,6 @@ class CalendarIndex(Resource):
         except IntegrityError:
             return {'error':'422 cannot process request'}, 422
 
-
-class CalendarByID(Resource):
-    pass
 
 class NoteByID(Resource):
     pass
