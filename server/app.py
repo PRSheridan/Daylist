@@ -18,8 +18,8 @@ def index():
 class CheckSession(Resource):
     def get(self):
         if session['user_id']:
-            user = User.query.filter(User.id == session['user_id']).first()
-            return user.to_dict(), 200
+            user = User.query.filter(User.id == session['user_id']).first().to_dict()
+            return user, 200
         return {'error': '401 Unauthorized Request'}, 401
 
 class Signup(Resource):
@@ -39,7 +39,7 @@ class Signup(Resource):
             db.session.add(user)
             db.session.commit()
             session['user_id'] = user.id
-            return user.to_dict()
+            return user.to_dict(), 201
         
         except IntegrityError:
             return {'error': '422 Cannot process request'}, 422
@@ -67,12 +67,21 @@ class Logout(Resource):
 
 class CalendarIndex(Resource):
     def get(self):
-        if session['user_id']:
-            calendars = []
-            #for calendar_id in User_Calendar.query.filter(User_Calendar.user_id == session['user_id']).all():
-            #    calendars.append(Calendar.query.filter(Calendar.id == calendar_id).first().to_dict())
-
-            return calendars
+        user_id = session.get('user_id')
+        if user_id:
+            # Get all User_Calendar entries for the user
+            user_calendars = User_Calendar.query.filter_by(user_id=user_id).all()
+            
+            # Extract calendar IDs
+            calendar_ids = [uc.calendar_id for uc in user_calendars]
+            
+            # Get all Calendar entries for the extracted IDs
+            calendars = Calendar.query.filter(Calendar.id.in_(calendar_ids)).all()
+            
+            # Serialize the results
+            calendar_list = [{'id': calendar.id, 'title': calendar.title} for calendar in calendars]
+            print(calendar_list)
+            return calendar_list, 200
 
         return {'error': '401 Unauthorized request'}, 401
     

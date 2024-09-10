@@ -18,7 +18,7 @@ function CalendarList({ user }) {
             <div>Calendars:
                 <>{calendars.length > 0 ? (
                     calendars.map((calendar) => (
-                        <h2>{calendar}</h2>
+                        <h2>{calendar.title}</h2>
                     ))
                 ) : (
                     <div>no calendars found</div>

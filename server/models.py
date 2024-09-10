@@ -6,14 +6,12 @@ from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
-
-    serialize_rules = ('-user_calendars.user',)
+    serialize_rules = ('-calendars.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
 
-    #relationships: many users have many calendars
     calendars = db.relationship('User_Calendar', back_populates='user')
 
     @hybrid_property
@@ -22,49 +20,41 @@ class User(db.Model, SerializerMixin):
 
     @password_hash.setter
     def password_hash(self, password):
-        password_hash = bcrypt.generate_password_hash(
-            password.encode('utf-8'))
+        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
         self._password_hash = password_hash.decode('utf-8')
 
     def authenticate(self, password):
-        return bcrypt.check_password_hash(
-            self._password_hash, password.encode('utf-8'))
+        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
-        return f'<User {self.username}'
-
+        return f'<User {self.username}>'
 
 class Calendar(db.Model, SerializerMixin):
     __tablename__ = 'calendars'
-
     serialize_rules = ('-users.calendar', '-user_calendars.calendar',)
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
 
-    #relationships: many users have many calendars, one calendar has many notes
     users = db.relationship('User_Calendar', back_populates='calendar')
     notes = db.relationship('Note', backref='calendar')
     reminders = db.relationship('Reminder', backref='calendar')
 
     def __repr__(self):
-        return f'<User {self.title}'
-
+        return f'<Calendar {self.title}>'
 
 class User_Calendar(db.Model, SerializerMixin):
     __tablename__ = 'user_calendars'
-
-    serialize_rules = ('-calendars.user', '-users.calendar')
+    serialize_rules = ('-user.calendars', '-calendar.users')
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'), primary_key=True)
 
-    #relationships: connect users and calendars
     user = db.relationship('User', back_populates='calendars')
     calendar = db.relationship('Calendar', back_populates='users')
 
     def __repr__(self):
-        return f'<User_Calendar {self.calendar_id}'
+        return f'<User_Calendar {self.calendar_id}>'
 
 
 class Note(db.Model, SerializerMixin):
