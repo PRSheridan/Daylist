@@ -15,14 +15,16 @@ function CalendarList({ user }) {
     
     return (
         <>
-            <div>Calendars:
-                <>{calendars.length > 0 ? (
-                    calendars.map((calendar) => (
-                        <h2>{calendar.title}</h2>
-                    ))
+        <h1>Calendars:</h1>
+            <div>
+                <>
+                { calendars.length > 0 ? ( calendars.map((calendar) => (
+                    <button>{calendar.title}
+                        <Link to="/palceholder"></Link>
+                    </button> ))
                 ) : (
-                    <div>no calendars found</div>
-                )}</>
+                    <div>no calendars found</div> )}
+                </>
             </div>
             <button>
                 <Link to="/new_calendar">+ New Calendar</Link>

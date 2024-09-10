@@ -24,7 +24,7 @@ function NewCalendar() {
             body: JSON.stringify(values, null, 1),
             }).then(
             (response) => {
-                if (response.ok) { history.push("/") }
+                if (response.ok) { history.push("/calendars") }
                 else { response.json().then((err) => setErrors(err.errors)) }
             }
             )
