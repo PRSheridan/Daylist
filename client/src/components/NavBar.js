@@ -20,11 +20,11 @@ function NavBar({ user, setUser }) {
       <NavLink
         to="/NewCalendar"
         className="nav-link"
-        >+ New Calendar
+        >+ New
       </NavLink>
-      <button onClick={handleLogoutClick}>
+      <a className="nav-link" onClick={handleLogoutClick}>
         Logout  
-      </button>
+      </a>
     </nav>
   )
 }

@@ -20,6 +20,14 @@ const routes = [
           path: "/Calendar",
           element: <CalendarView />
         },
+        {
+          path: "/NewNote",
+          element: <NewNote />
+        },
+        {
+          path: "/Note",
+          element: <NoteView />
+        },
       ]
     },
 ];

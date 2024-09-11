@@ -14,21 +14,21 @@ function CalendarList({ user }) {
     
     return (
         <>
-        <h1>Calendars:</h1>
-            <div>
-                <>
-                { calendars.length > 0 ? ( calendars.map((calendar) => (
-                    <button key={calendar.title} 
-                            onClick={() => navigate("/Calendar", {state: {calendar}})}>
-                        {calendar.title}
-                    </button> ))
-                ) : (
-                    <div>no calendars found</div> )}
-                </>
+        <div className="header">Calendars:</div>
+        <hr className="rounded"></hr>
+            <div id="calendar-list"> { calendars.length > 0 ? ( calendars.map((calendar) => (
+                <a className="card" 
+                    key={calendar.title}  
+                    onClick={() => navigate("/Calendar", {state: {calendar}})}>
+                    {calendar.title}
+                </a>
+            ))) : (
+                <div>no calendars found</div> )}
             </div>
-            <button onClick={() => navigate("/NewCalendar")}>
-                + New Calendar
-            </button>
+
+            <a className="card" onClick={() => navigate("/NewCalendar")}>
+                + New
+            </a>
         </>
     )
 }

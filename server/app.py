@@ -104,27 +104,74 @@ class CalendarIndex(Resource):
             return {'error':'422 cannot process request'}, 422
 
 class CalendarByID(Resource):
-    def get(self):
+    def get(self, id):
         user_id = session.get('user_id')
-        json = request.get_json()
         if user_id:
-            calendar = Calendar.query.filter(Calendar.id == json["id"]).first().to_dict()
-            return calendar, 200
-        return {'error': '401 Unauthorized request'}, 401
+            calendar = Calendar.query.filter(Calendar.id == id).one_or_none()
+            if calendar is None:
+                return make_response({'error': 'Calendar not found'}, 404)
+            return make_response(calendar.to_dict(), 200)
+        
+    def delete(self, id):
+        user_id = session.get('user_id')
+        if user_id:
+            calendar = Calendar.query.filter(Calendar.id == id).one_or_none()
+            if calendar is None:
+                return make_response({'error': 'Calendar not found'}, 404)
+            db.session.delete(calendar)
+            db.session.commit()
+            return make_response({}, 204)
+        
+class NoteByCalendarID(Resource):
+    def get(self, calendarID):
+        notes = Note.query.filter(Note.calendar_id == calendarID).all()
+        return make_response(notes.to_dict(), 200)
 
+    def post(self, calendarID):
+        data = request.get_json()
+        date = data['date']
+        title = data['title']
+        content = data['content']
+
+        try:
+            note = Note(
+                date=date,
+                title=title,
+                content=content,
+                calendar_id=calendarID
+            )
+
+            db.session.add(note)
+            db.session.commit()
+
+            return note
+        except IntegrityError:
+            return {'error':'422 cannot process request'}, 422
+        
 class NoteByID(Resource):
-    pass
+    def get(self, id):
+        note = Note.query.filter(Note.id == id).one_or_none()
+        if note is None:
+            return make_response({'error': 'Note not found'}, 404)
+        return make_response(note.to_dict(), 200)
 
-class ReminderByID(Resource):
-    pass
-
+    def delete(self, id):
+        note = Note.query.filter(Note.id == id).one_or_none()
+        if note is None:
+            return make_response({'error': 'Note not found'}, 404)
+        db.session.delete(note)
+        db.session.commit()
+        return make_response({}, 204)
+        
 
 api.add_resource(CheckSession, '/check_session')
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CalendarIndex, '/calendars')
-api.add_resource(CalendarByID, '/calendars/<int:id>')
+api.add_resource(CalendarByID, '/calendar/<int:id>')
+api.add_resource(NoteByCalendarID, '/calendar_notes/<int:id>')
+api.add_resource(NoteByID, '/note/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

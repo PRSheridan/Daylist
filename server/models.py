@@ -60,6 +60,8 @@ class User_Calendar(db.Model, SerializerMixin):
 class Note(db.Model, SerializerMixin):
     __tablename__ = 'notes'
 
+    serialize_only = ('id', 'date', 'title', 'content', 'calendar_id')
+
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, nullable=False)
     title = db.Column(db.String, nullable=False)
