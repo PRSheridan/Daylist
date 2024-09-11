@@ -2,6 +2,8 @@ import App from "./components/App.js"
 import CalendarList from "./pages/CalendarList.js"
 import CalendarView from "./pages/CalendarView.js"
 import NewCalendar from "./pages/NewCalendar.js"
+import NewNote from "./pages/NewNote.js"
+import NoteView from "./pages/NoteView.js"
 
 const routes = [
     {

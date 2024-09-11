@@ -8,18 +8,17 @@ function NewNote() {
     const location = useLocation()
     const [errors, setErrors] = useState([])
     const calendarID = location.state.calendarID
-    const date = ""
+    const date = location.state.date
 
     const formSchema = yup.object().shape({
         date: yup.date().required(),
         title: yup.string().required("Note must have a title"),
         content: yup.string().required("Note must have content"),
-        calendar_id: yup.int().required("Note must have a calendar")
       });
 
     const formik = useFormik({
         initialValues: { 
-            date: "",
+            date: date,
             title: "",
             content: "",
             calendar_id: calendarID },
@@ -44,6 +43,16 @@ function NewNote() {
         <>
             <h2>New note:</h2>
             <form onSubmit={ formik.handleSubmit }>
+                <div>
+                    <div>Enter note date:</div>
+                    <input
+                    type="text"
+                    id="date"
+                    autoComplete="off"
+                    value={ formik.values.date }
+                    onChange={ formik.handleChange }
+                    />
+                </div>
                 <div>
                     <div>Enter note title:</div>
                     <input
@@ -72,4 +81,4 @@ function NewNote() {
     )
 }
 
-export default NewCalendar
+export default NewNote
