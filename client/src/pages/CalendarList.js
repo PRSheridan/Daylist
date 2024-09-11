@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NewCalendar from "./NewCalendar";
-import Calendar from "../components/Calendar"
 
 function CalendarList({ user }) {
+    const navigate = useNavigate()
     const [calendars, setCalendars] = useState([])
 
     useEffect(() => {
         fetch("/calendars")
         .then((response) => response.json())
         .then(setCalendars)
-        console.log(calendars)
     }, [])
     
     return (
@@ -19,15 +18,16 @@ function CalendarList({ user }) {
             <div>
                 <>
                 { calendars.length > 0 ? ( calendars.map((calendar) => (
-                    <button>{calendar.title}
-                        <Link to="/palceholder"></Link>
+                    <button key={calendar.title} 
+                            onClick={() => navigate("/Calendar", {state: {calendar}})}>
+                        {calendar.title}
                     </button> ))
                 ) : (
                     <div>no calendars found</div> )}
                 </>
             </div>
-            <button>
-                <Link to="/new_calendar">+ New Calendar</Link>
+            <button onClick={() => navigate("/NewCalendar")}>
+                + New Calendar
             </button>
         </>
     )

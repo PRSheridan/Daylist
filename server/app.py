@@ -69,18 +69,10 @@ class CalendarIndex(Resource):
     def get(self):
         user_id = session.get('user_id')
         if user_id:
-            # Get all User_Calendar entries for the user
             user_calendars = User_Calendar.query.filter_by(user_id=user_id).all()
-            
-            # Extract calendar IDs
-            calendar_ids = [uc.calendar_id for uc in user_calendars]
-            
-            # Get all Calendar entries for the extracted IDs
+            calendar_ids = [cal.calendar_id for cal in user_calendars]
             calendars = Calendar.query.filter(Calendar.id.in_(calendar_ids)).all()
-            
-            # Serialize the results
             calendar_list = [{'id': calendar.id, 'title': calendar.title} for calendar in calendars]
-            print(calendar_list)
             return calendar_list, 200
 
         return {'error': '401 Unauthorized request'}, 401
@@ -111,6 +103,14 @@ class CalendarIndex(Resource):
         except IntegrityError:
             return {'error':'422 cannot process request'}, 422
 
+class CalendarByID(Resource):
+    def get(self):
+        user_id = session.get('user_id')
+        json = request.get_json()
+        if user_id:
+            calendar = Calendar.query.filter(Calendar.id == json["id"]).first().to_dict()
+            return calendar, 200
+        return {'error': '401 Unauthorized request'}, 401
 
 class NoteByID(Resource):
     pass
@@ -124,6 +124,7 @@ api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CalendarIndex, '/calendars')
+api.add_resource(CalendarByID, '/calendars/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
