@@ -37,6 +37,12 @@ function CalendarView() {
     function buildMonth (date) {
         const days = []
         const totalDays = daysInMonth(date)
+        const monthsNotes = []
+        notes.forEach(note => {
+            if (note.month == date[1]) {
+                monthsNotes.push(note)
+            }
+        })
         
         days.push(
             <>

@@ -27,7 +27,7 @@ function NoteView() {
                     </a>
                 </div>
             ))) : (
-                <div>no calendars found</div> )}
+                <div>no notes found</div> )}
             </div>
             <a className="note-card" onClick={() => navigate("/NewNote", {state: {calendarID, date}})}>
                 + New

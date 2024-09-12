@@ -24,7 +24,7 @@ function NewCalendar() {
             body: JSON.stringify(values, null, 1),
             }).then(
             (response) => {
-                if (response.ok) { navigate("/calendars") }
+                if (response.ok) { navigate("/CalendarList") }
                 else { response.json().then((err) => setErrors(err.errors)) }
             }
             )
