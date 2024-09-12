@@ -129,13 +129,17 @@ class NoteByCalendarID(Resource):
 
     def post(self, calendarID):
         data = request.get_json()
-        date = data['date']
+        year = data['year']
+        month = data['month']
+        day = data['day']
         title = data['title']
         content = data['content']
 
         try:
             note = Note(
-                date=date,
+                year=year,
+                month=month,
+                day=day,
                 title=title,
                 content=content,
                 calendar_id=calendarID
@@ -144,7 +148,7 @@ class NoteByCalendarID(Resource):
             db.session.add(note)
             db.session.commit()
 
-            return note
+            return note.to_dict(), 200
         except IntegrityError:
             return {'error':'422 cannot process request'}, 422
         

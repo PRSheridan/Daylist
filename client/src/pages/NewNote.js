@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
-import datetime from 'react-datetime'
 
 function NewNote() {
     const navigate = useNavigate()
@@ -10,17 +9,21 @@ function NewNote() {
     const [errors, setErrors] = useState([])
     const calendarID = location.state.calendarID
     const date = location.state.date
-    const formatDate = datetime.date(date[0], date[1], date[2])
+
+    const year = date[0]
+    const month = date[1]
+    const day = date [2]
 
     const formSchema = yup.object().shape({
-        date: yup.date().required(),
         title: yup.string().required("Note must have a title"),
         content: yup.string().required("Note must have content"),
       });
 
     const formik = useFormik({
         initialValues: { 
-            date: formatDate,
+            year: year,
+            month: month,
+            day: day,
             title: "",
             content: "",
             calendar_id: calendarID },
@@ -44,17 +47,8 @@ function NewNote() {
     return (
         <>
             <h2>New note:</h2>
+            <div>{year}, {month}, {day}:</div>
             <form onSubmit={ formik.handleSubmit }>
-                <div>
-                    <div>Enter note date:</div>
-                    <input
-                    type="text"
-                    id="date"
-                    autoComplete="off"
-                    value={ formik.values.date }
-                    onChange={ formik.handleChange }
-                    />
-                </div>
                 <div>
                     <div>Enter note title:</div>
                     <input

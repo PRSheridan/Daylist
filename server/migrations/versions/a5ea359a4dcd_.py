@@ -1,8 +1,8 @@
-"""initial migration
+"""empty message
 
-Revision ID: 0540e3b08078
+Revision ID: a5ea359a4dcd
 Revises: 
-Create Date: 2024-08-29 18:51:33.695156
+Create Date: 2024-09-12 11:23:59.269852
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0540e3b08078'
+revision = 'a5ea359a4dcd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,8 +21,7 @@ def upgrade():
     op.create_table('calendars',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('title')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -33,7 +32,9 @@ def upgrade():
     )
     op.create_table('notes',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('date', sa.Date(), nullable=False),
+    sa.Column('year', sa.Integer(), nullable=False),
+    sa.Column('month', sa.Integer(), nullable=False),
+    sa.Column('day', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('content', sa.String(), nullable=True),
     sa.Column('calendar_id', sa.Integer(), nullable=False),

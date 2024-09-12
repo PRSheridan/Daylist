@@ -4,7 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 function CalendarView() {
     const navigate = useNavigate()
     const location = useLocation()
-    const calendarID = location.state.calendar.id
+    const calendarID = location.state.calendarID
+    console.log(calendarID)
     const today = new Date()
     //year month day
     const [date, setDate] = useState([9999, 1, 1])

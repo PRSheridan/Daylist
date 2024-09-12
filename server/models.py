@@ -60,10 +60,12 @@ class User_Calendar(db.Model, SerializerMixin):
 class Note(db.Model, SerializerMixin):
     __tablename__ = 'notes'
 
-    serialize_only = ('id', 'date', 'title', 'content', 'calendar_id')
+    serialize_only = ('id', 'year', 'month', 'day', 'title', 'content', 'calendar_id')
 
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    month = db.Column(db.Integer, nullable=False)
+    day = db.Column(db.Integer, nullable=False)
     title = db.Column(db.String, nullable=False)
     content = db.Column(db.String)
 
@@ -71,7 +73,7 @@ class Note(db.Model, SerializerMixin):
     calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'), nullable=False)
 
     def __repr__(self):
-        return f'<User {self.title, self.date}'
+        return f'<User {self.title, self.year, self.month, self.day}'
 
 
 class Reminder(db.Model, SerializerMixin):

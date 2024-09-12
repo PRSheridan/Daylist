@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NewCalendar from "./NewCalendar";
 
 function CalendarList({ user }) {
     const navigate = useNavigate()
@@ -19,7 +18,7 @@ function CalendarList({ user }) {
             <div id="calendar-list"> { calendars.length > 0 ? ( calendars.map((calendar) => (
                 <a className="card" 
                     key={calendar.title}  
-                    onClick={() => navigate("/Calendar", {state: {calendar}})}>
+                    onClick={() => navigate("/Calendar", {state: {id: calendar.id}})}>
                     {calendar.title}
                 </a>
             ))) : (
