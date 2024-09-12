@@ -77,3 +77,19 @@ hr.rounded {
 	text-align: center;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.note-card {
+	display: inline-block;
+	  width: 120px;
+	  height: 40px;
+	  margin: 2px;
+	  background-color: rgb(196, 199, 212);
+	  border-radius: 10px;
+	  overflow: hidden;
+	  text-align: center;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+#month-container {
+	width: 310px;
+}

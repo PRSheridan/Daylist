@@ -3,7 +3,7 @@ import CalendarList from "./pages/CalendarList.js"
 import CalendarView from "./pages/CalendarView.js"
 import NewCalendar from "./pages/NewCalendar.js"
 import NewNote from "./pages/NewNote.js"
-import NoteView from "./pages/NoteView.js"
+import NotesView from "./pages/NotesView.js"
 
 const routes = [
     {
@@ -27,8 +27,8 @@ const routes = [
           element: <NewNote />
         },
         {
-          path: "/Note",
-          element: <NoteView />
+          path: "/Notes",
+          element: <NotesView />
         },
       ]
     },

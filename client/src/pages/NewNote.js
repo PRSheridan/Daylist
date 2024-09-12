@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
+import datetime from 'react-datetime'
 
 function NewNote() {
     const navigate = useNavigate()
@@ -9,6 +10,7 @@ function NewNote() {
     const [errors, setErrors] = useState([])
     const calendarID = location.state.calendarID
     const date = location.state.date
+    const formatDate = datetime.date(date[0], date[1], date[2])
 
     const formSchema = yup.object().shape({
         date: yup.date().required(),
@@ -18,7 +20,7 @@ function NewNote() {
 
     const formik = useFormik({
         initialValues: { 
-            date: date,
+            date: formatDate,
             title: "",
             content: "",
             calendar_id: calendarID },
