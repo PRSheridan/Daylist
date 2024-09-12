@@ -5,11 +5,10 @@ function CalendarView() {
     const navigate = useNavigate()
     const location = useLocation()
     const calendarID = location.state.calendarID
-    console.log(calendarID)
     const today = new Date()
-    //year month day
     const [date, setDate] = useState([9999, 1, 1])
     const [calendar, setCalendar] = useState([])
+    const [notes, setNotes] = useState([])
     
     //fetch todays date, format to day month year, display calendar
     //allow +/- month, display month
@@ -18,6 +17,10 @@ function CalendarView() {
         fetch(`/calendar/${calendarID}`)
         .then((response) => response.json())
         .then(setCalendar)
+
+        fetch(`/calendar_notes/${calendarID}`)
+        .then((response) => response.json())
+        .then(setNotes)
     }, [])
 
     function formatDate(today) {
@@ -41,13 +44,14 @@ function CalendarView() {
                 <div key="month">Month: {date[1]} Year: {date[2]}</div>
             </>
         )
-
+//if note month and day == calendar month and day display #of notes per day OR titles?
         for (let day = 1; day <= totalDays; day++) {
             days.push(
                 <a key={day} 
                     className="day-card" 
                     onClick={() => navigate("/Notes", {state: {calendarID, date}})}>
                     {day}
+                    <div></div>
                 </a>
             );
         }

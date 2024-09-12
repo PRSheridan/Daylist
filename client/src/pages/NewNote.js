@@ -37,7 +37,7 @@ function NewNote() {
             body: JSON.stringify(values, null, 1),
             }).then(
             (response) => {
-                if (response.ok) { navigate(`/calendar/${calendarID}`) }
+                if (response.ok) { navigate(`/calendar/`, {state: {calendarID}}) }
                 else { response.json().then((err) => setErrors(err.errors)) }
             }
             )

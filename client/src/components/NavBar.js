@@ -17,11 +17,6 @@ function NavBar({ user, setUser }) {
         className="nav-link"
         >Calendars
       </NavLink>
-      <NavLink
-        to="/NewCalendar"
-        className="nav-link"
-        >+ New
-      </NavLink>
       <a className="nav-link" onClick={handleLogoutClick}>
         Logout  
       </a>

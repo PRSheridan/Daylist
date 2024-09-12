@@ -124,8 +124,11 @@ class CalendarByID(Resource):
         
 class NoteByCalendarID(Resource):
     def get(self, calendarID):
+        #calendar_list = [{'id': calendar.id, 'title': calendar.title} for calendar in calendars]
         notes = Note.query.filter(Note.calendar_id == calendarID).all()
-        return make_response(notes, 200)
+        note_list = [{'id': note.id, 'year': note.year, 'month': note.month, 'day': note.day,
+                      'title': note.title, 'content': note.content} for note in notes]
+        return note_list, 200
 
     def post(self, calendarID):
         data = request.get_json()
@@ -148,7 +151,7 @@ class NoteByCalendarID(Resource):
             db.session.add(note)
             db.session.commit()
 
-            return note.to_dict(), 200
+            return note, 200
         except IntegrityError:
             return {'error':'422 cannot process request'}, 422
         
@@ -157,7 +160,7 @@ class NoteByID(Resource):
         note = Note.query.filter(Note.id == id).one_or_none()
         if note is None:
             return make_response({'error': 'Note not found'}, 404)
-        return make_response(note.to_dict(), 200)
+        return note, 200
 
     def delete(self, id):
         note = Note.query.filter(Note.id == id).one_or_none()

@@ -15,7 +15,20 @@ function NoteView() {
     }, [])
 
     return (
-        <>{notes}
+                <>
+        <div className="header">{date[0]}, {date[1]}, {date[2]} - Notes:</div>
+        <hr className="rounded"></hr>
+            <div id="note-list"> { notes.length > 0 ? ( notes.map((note) => (
+                <div>
+                    <a className="note-card" 
+                        key={note.id}>
+                        {note.title}
+                        <div>{note.content}</div>
+                    </a>
+                </div>
+            ))) : (
+                <div>no calendars found</div> )}
+            </div>
             <a className="note-card" onClick={() => navigate("/NewNote", {state: {calendarID, date}})}>
                 + New
             </a>

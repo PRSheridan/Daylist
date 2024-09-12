@@ -18,7 +18,7 @@ function CalendarList({ user }) {
             <div id="calendar-list"> { calendars.length > 0 ? ( calendars.map((calendar) => (
                 <a className="card" 
                     key={calendar.title}  
-                    onClick={() => navigate("/Calendar", {state: {id: calendar.id}})}>
+                    onClick={() => navigate("/Calendar", {state: {calendarID: calendar.id}})}>
                     {calendar.title}
                 </a>
             ))) : (
