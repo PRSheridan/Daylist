@@ -14,7 +14,7 @@ function CalendarList({ user }) {
     return (
         <>
         <div className="header">Calendars:</div>
-        <hr className="rounded"></hr>
+            <hr className="rounded"></hr>
             <div id="calendar-list"> { calendars.length > 0 ? ( calendars.map((calendar) => (
                 <a className="card" 
                     key={calendar.title}  
@@ -22,7 +22,7 @@ function CalendarList({ user }) {
                     {calendar.title}
                 </a>
             ))) : (
-                <div className="alert"> no calendars found </div> 
+                <div className="alert"> No calendars found </div> 
             )}
                 <a className="card new" onClick={() => navigate("/NewCalendar")}>
                     + New

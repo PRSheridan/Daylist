@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 function CalendarView() {
     const navigate = useNavigate()
     const location = useLocation()
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     const [calendar, setCalendar] = useState([])
     const [notes, setNotes] = useState([])
     const [date, setDate] = useState([9999, 1, 1])
@@ -49,9 +50,12 @@ function CalendarView() {
         
         days.push(
             <div key="header">
-                <div className="header">{calendar.title}:</div>
+                <div className="header">{calendar.title}:
+                    <button className="back-button">share calendar</button>
+                    <button className="back-button">delete calendar</button>
+                </div>
                 <hr className="rounded"></hr>
-                <div>Month: {date[1]} Year: {date[0]}</div>
+                <div>{months[date[1]-1]}, {date[0]}</div>
             </div>
         )
 
