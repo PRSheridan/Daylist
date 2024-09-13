@@ -1,18 +1,11 @@
-import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function NoteView() {
     const navigate = useNavigate()
     const location = useLocation()
-    const [notes, setNotes] = useState([])
     const calendarID = location.state.calendarID
+    const notes = location.state.notes
     const date = location.state.date
-
-    useEffect(() => {
-        fetch(`/calendar_notes/${calendarID}`)
-        .then((response) => response.json())
-        .then(setNotes)
-    }, [])
 
     return (
                 <>

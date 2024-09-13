@@ -10,8 +10,6 @@ function CalendarView() {
     const [calendar, setCalendar] = useState([])
     const [notes, setNotes] = useState([])
     
-    //fetch todays date, format to day month year, display calendar
-    //allow +/- month, display month
     useEffect(() => {
         formatDate(today)
         fetch(`/calendar/${calendarID}`)
@@ -37,27 +35,27 @@ function CalendarView() {
     function buildMonth (date) {
         const days = []
         const totalDays = daysInMonth(date)
-        const monthsNotes = []
-        notes.forEach(note => {
-            if (note.month == date[1]) {
-                monthsNotes.push(note)
-            }
-        })
         
         days.push(
             <>
-                <h1 key="title">{calendar.title}</h1>
-                <div key="month">Month: {date[1]} Year: {date[2]}</div>
+                <h1>{calendar.title}</h1>
+                <div>Month: {date[1]} Year: {date[2]}</div>
             </>
         )
-//if note month and day == calendar month and day display #of notes per day OR titles?
+//onClick setDate (currently all days show all notes)
+//all notes displaying on current day
         for (let day = 1; day <= totalDays; day++) {
+            const filteredNotes = notes.filter((note) => note.month === date[1] && note.day === day)
             days.push(
                 <a key={day} 
                     className="day-card" 
-                    onClick={() => navigate("/Notes", {state: {calendarID, date}})}>
+                    onClick={() => navigate("/Notes", {state: {notes, date, calendarID}})}>
                     {day}
-                    <div></div>
+                    {filteredNotes.map((note, index) => (
+                        <div key={index}>
+                            {note.title}
+                        </div>
+                    ))}
                 </a>
             );
         }

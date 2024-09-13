@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar.js"
 import Login from "../pages/Login.js";
-import CalendarList from "../pages/CalendarList.js"
-import NewCalendar from "../pages/NewCalendar.js"
 
 function App() {
   const navigate = useNavigate()
