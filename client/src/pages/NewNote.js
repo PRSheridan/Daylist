@@ -46,8 +46,9 @@ function NewNote() {
 
     return (
         <>
-            <h2>New note:</h2>
-            <div>{year}, {month}, {day}:</div>
+            <div className="header">New note:</div>
+            <hr className="rounded"></hr>
+            <div>{date[0]}, {date[1]}, {date[2]}:</div>
             <form onSubmit={ formik.handleSubmit }>
                 <div>
                     <div>Enter note title:</div>

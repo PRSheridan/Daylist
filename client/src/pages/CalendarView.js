@@ -22,9 +22,10 @@ function CalendarView() {
         .then(setNotes)
     }, [])
 
-    function daySelect(day) {
+    function daySelect(day, filteredNotes) {
         const selectedDate = [date[0], date[1], day]
-        navigate("/Notes", {state: {notes, selectedDate, calendarID}})
+        console.log(filteredNotes)
+        navigate("/Notes", {state: {filteredNotes, selectedDate, calendarID}})
     }
 
     function isToday(day) {
@@ -58,12 +59,11 @@ function CalendarView() {
             let filteredNotes = notes.filter((note) => note.month === date[1] && note.day === day)
             days.push(
                 <a key={day}
-                    className={`day-card ${isToday(day) ? 'today' : ''}`}
-                    onClick={() => daySelect(day)}>
-                    {day}
-                    {filteredNotes.map((note) => (
-                    <div key={note.id}> {note.title} </div>
-                    ))}
+                    className={`day-card ${isToday(day) ? 'new' : ''}`}
+                    onClick={() => daySelect(day, filteredNotes)}> {day}
+                    <div className="note-count"> { filteredNotes.length > 0 ?
+                     `${filteredNotes.length}` : "" }
+                    </div>
                 </a>
             );
         }

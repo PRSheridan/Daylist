@@ -151,7 +151,7 @@ class NoteByCalendarID(Resource):
             db.session.add(note)
             db.session.commit()
 
-            return note, 200
+            return note.to_dict(), 200
         except IntegrityError:
             return {'error':'422 cannot process request'}, 422
         

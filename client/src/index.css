@@ -74,10 +74,6 @@ hr.rounded {
 	}
 }
 
-#new-card {
-	background-color: #81d8acb9;
-}
-
 #month-container {
 	width: 460px;
 }
@@ -107,18 +103,33 @@ hr.rounded {
   }
 }
 
-.today {
-	background-color: #81d8acb9;
-}
-
 .note-card {
 	display: inline-block;
-	  width: 120px;
-	  height: 40px;
+	  width: 500px;
+	  padding: 4px;
 	  margin: 2px;
-	  background-color: rgb(196, 199, 212);
+	  background-color: #3b97eeb9;
 	  border-radius: 10px;
 	  overflow: hidden;
 	  text-align: center;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 22px;
   }
+
+  .note-card-content {
+	font-size: 16px;
+  }
+
+  .note-count {
+	background-color: #07000060;
+	margin-top: 4px;
+	margin-left: 16px;
+	width: 28px;
+	color:#fff;
+	font-size: 20px;
+	border-radius: 100px;
+  }
+
+  .new {
+	background-color: #81d8acb9;
+}

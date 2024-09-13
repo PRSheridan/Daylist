@@ -24,7 +24,7 @@ function CalendarList({ user }) {
             ))) : (
                 <div className="alert"> no calendars found </div> 
             )}
-                <a id="new-card" className="card" onClick={() => navigate("/NewCalendar")}>
+                <a className="card new" onClick={() => navigate("/NewCalendar")}>
                     + New
                 </a>
             </div>
