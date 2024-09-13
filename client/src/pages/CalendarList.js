@@ -22,12 +22,13 @@ function CalendarList({ user }) {
                     {calendar.title}
                 </a>
             ))) : (
-                <div>no calendars found</div> )}
+                <div className="alert"> no calendars found </div> 
+            )}
+                <a id="new-card" className="card" onClick={() => navigate("/NewCalendar")}>
+                    + New
+                </a>
             </div>
 
-            <a className="card" onClick={() => navigate("/NewCalendar")}>
-                + New
-            </a>
         </>
     )
 }

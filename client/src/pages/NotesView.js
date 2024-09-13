@@ -5,7 +5,8 @@ function NoteView() {
     const location = useLocation()
     const calendarID = location.state.calendarID
     const notes = location.state.notes
-    const date = location.state.date
+    const date = location.state.selectedDate
+    console.log(date)
 
     return (
                 <>

@@ -16,7 +16,7 @@
 	width: 80px;
 	height: 23px;
 	margin: 5px;
-	background-color: rgb(158, 170, 241);
+	background-color: #3b97eeb9;
 	border-radius: 10px;
 	overflow: hidden;
 	text-align: center;
@@ -40,12 +40,20 @@ hr.rounded {
   border-radius: 5px;
 }
 
+.alert {
+	padding: 18px;
+	background-color: #f55d5db9;
+	color: white;
+	margin-bottom: 15px;
+	border-radius: 10px;
+  }
+
 .card {
 	display: inline-block;
 	width: 120px;
 	height: 120px;
 	margin: 4px;
-	background-color: rgb(158, 170, 241);
+	background-color: #3b97eeb9;
 	border-radius: 10px;
 	overflow: hidden;
 	text-align: center;
@@ -66,6 +74,10 @@ hr.rounded {
 	}
 }
 
+#new-card {
+	background-color: #81d8acb9;
+}
+
 #month-container {
 	width: 460px;
 }
@@ -75,7 +87,7 @@ hr.rounded {
 	width: 60px;
 	height: 60px;
 	margin: 2px;
-	background-color: rgb(196, 199, 212);
+	background-color: #3b97eeb9;
 	border-radius: 10px;
 	overflow: hidden;
 	text-align: center;
@@ -93,6 +105,10 @@ hr.rounded {
 	  box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
 	  transform: translateY(2px);
   }
+}
+
+.today {
+	background-color: #81d8acb9;
 }
 
 .note-card {
