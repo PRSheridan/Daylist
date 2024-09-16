@@ -12,6 +12,11 @@
   font-size: 40px;
 }
 
+.date {
+	text-align: center;
+	font-size: 22px;
+}
+
 .nav-link {
   display: inline-block;
 	width: 80px;
@@ -102,6 +107,10 @@ hr.rounded {
 	width: 460px;
 }
 
+#note-container {
+	width: 600px;
+}
+
 .day-card {
   display: inline-block;
 	width: 60px;
@@ -132,6 +141,7 @@ hr.rounded {
 	  width: 500px;
 	  padding: 4px;
 	  margin: 2px;
+	  margin-left: 50px;
 	  background-color: #3b97eeb9;
 	  border-radius: 10px;
 	  overflow: hidden;

@@ -4,7 +4,8 @@ import CalendarView from "./pages/CalendarView.js"
 import NewCalendar from "./pages/NewCalendar.js"
 import NewNote from "./pages/NewNote.js"
 import NotesView from "./pages/NotesView.js"
-
+//potentially make newcalendar, newnote popup windows? possible?
+//share button, delete buttons, edit buttons
 const routes = [
     {
       path: "/",

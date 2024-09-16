@@ -25,7 +25,6 @@ function CalendarView() {
 
     function daySelect(day, filteredNotes) {
         const selectedDate = [date[0], date[1], day]
-        console.log(filteredNotes)
         navigate("/Notes", {state: {filteredNotes, selectedDate, calendarID}})
     }
 
@@ -55,7 +54,7 @@ function CalendarView() {
                     <button className="back-button">delete calendar</button>
                 </div>
                 <hr className="rounded"></hr>
-                <div>{months[date[1]-1]}, {date[0]}</div>
+                <div className="date">{months[date[1]-1]}, {date[0]}</div>
             </div>
         )
 

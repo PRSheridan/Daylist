@@ -124,7 +124,6 @@ class CalendarByID(Resource):
         
 class NoteByCalendarID(Resource):
     def get(self, calendarID):
-        #calendar_list = [{'id': calendar.id, 'title': calendar.title} for calendar in calendars]
         notes = Note.query.filter(Note.calendar_id == calendarID).all()
         note_list = [{'id': note.id, 'year': note.year, 'month': note.month, 'day': note.day,
                       'title': note.title, 'content': note.content} for note in notes]
@@ -156,13 +155,13 @@ class NoteByCalendarID(Resource):
             return {'error':'422 cannot process request'}, 422
         
 class NoteByID(Resource):
-    def get(self, id):
+    def get(self, noteID):
         note = Note.query.filter(Note.id == id).one_or_none()
         if note is None:
             return make_response({'error': 'Note not found'}, 404)
         return note, 200
 
-    def delete(self, id):
+    def delete(self, noteID):
         note = Note.query.filter(Note.id == id).one_or_none()
         if note is None:
             return make_response({'error': 'Note not found'}, 404)
@@ -178,7 +177,7 @@ api.add_resource(Logout, '/logout')
 api.add_resource(CalendarIndex, '/calendars')
 api.add_resource(CalendarByID, '/calendar/<int:id>')
 api.add_resource(NoteByCalendarID, '/calendar_notes/<int:calendarID>')
-api.add_resource(NoteByID, '/note/<int:id>')
+api.add_resource(NoteByID, '/note/<int:noteID>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

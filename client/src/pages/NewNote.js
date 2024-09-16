@@ -8,11 +8,12 @@ function NewNote() {
     const location = useLocation()
     const [errors, setErrors] = useState([])
     const calendarID = location.state.calendarID
-    const date = location.state.date
+    const selectedDate = location.state.date
+    const filteredNotes = location.state.notes
 
-    const year = date[0]
-    const month = date[1]
-    const day = date [2]
+    const year = selectedDate[0]
+    const month = selectedDate[1]
+    const day = selectedDate [2]
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Note must have a title"),
@@ -35,12 +36,11 @@ function NewNote() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(values, null, 1),
-            }).then(
-            (response) => {
+            }).then((response) => {
+                console.log(filteredNotes)
                 if (response.ok) { navigate(`/calendar/`, {state: {calendarID}}) }
                 else { response.json().then((err) => setErrors(err.errors)) }
-            }
-            )
+            })
         },
     })
 
@@ -48,7 +48,7 @@ function NewNote() {
         <>
             <div className="header">New note:</div>
             <hr className="rounded"></hr>
-            <div>{date[0]}, {date[1]}, {date[2]}:</div>
+            <div>{selectedDate[0]}, {selectedDate[1]}, {selectedDate[2]}:</div>
             <form onSubmit={ formik.handleSubmit }>
                 <div>
                     <div>Enter note title:</div>

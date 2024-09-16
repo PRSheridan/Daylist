@@ -8,6 +8,7 @@ function App() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
+    document.title = 'Day Tracker'
     fetch("/check_session")
     .then((response) => {
       if (response.ok) {
