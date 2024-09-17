@@ -36,9 +36,8 @@ class Calendar(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
 
-    users = db.relationship('User_Calendar', back_populates='calendar')
-    notes = db.relationship('Note', backref='calendar')
-    reminders = db.relationship('Reminder', backref='calendar')
+    users = db.relationship('User_Calendar', back_populates='calendar', cascade='all, delete-orphan')
+    notes = db.relationship('Note', backref='calendar', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'<Calendar {self.title}>'
@@ -74,18 +73,3 @@ class Note(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<User {self.title, self.year, self.month, self.day}'
-
-
-class Reminder(db.Model, SerializerMixin):
-    __tablename__ = 'reminders'
-
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
-    content = db.Column(db.String, nullable=False)
-    repeating = db.Column(db.String)
-
-    #relationships: one calendar has many reminders
-    calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'), nullable=False)
-
-    def __repr__(self):
-        return f'<User {self.content, self.date}'

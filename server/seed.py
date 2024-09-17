@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from app import app
-from models import db, User, Calendar, User_Calendar, Note, Reminder
+from models import db, User, Calendar, User_Calendar, Note
 
 if __name__ == '__main__':
 
@@ -11,7 +11,6 @@ if __name__ == '__main__':
         Calendar.query.delete()
         User_Calendar.query.delete()
         Note.query.delete()
-        Reminder.query.delete()
         db.session.commit()
 
         print("Database seeded successfully!")

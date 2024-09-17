@@ -15,7 +15,7 @@ function NavBar({ user, setUser }) {
       <NavLink
         to={{pathname: "/CalendarList"}}
         className="nav-link"
-        >Calendars
+        >Calendar List
       </NavLink>
       <a className="nav-link" onClick={handleLogoutClick}>
         Logout  

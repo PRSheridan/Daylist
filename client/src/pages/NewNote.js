@@ -37,7 +37,6 @@ function NewNote() {
             },
             body: JSON.stringify(values, null, 1),
             }).then((response) => {
-                console.log(filteredNotes)
                 if (response.ok) { navigate(`/calendar/`, {state: {calendarID}}) }
                 else { response.json().then((err) => setErrors(err.errors)) }
             })

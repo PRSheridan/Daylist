@@ -2,9 +2,6 @@ import { useState } from "react"
 import LoginForm from "../components/LoginForm"
 import SignupForm from "../components/SignupForm"
 
-//complete Login, and Login/Signup Forms first
-//NavBar, CalendarList next
-//use IAM code-along for reference
 function Login({onLogin}) {
     const [showLogin, setShowLogin] = useState(true)
 

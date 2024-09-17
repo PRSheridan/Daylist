@@ -43,6 +43,14 @@ function CalendarView() {
         return new Date(date[1], date[0], 0).getDate();
     }
 
+    function deleteCalendar(id) {
+        fetch(`/calendar/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type':'application/json' }
+        })
+        .then( navigate("/CalendarList") )
+    }
+
     function buildMonth (date) {
         const days = []
         const totalDays = daysInMonth(date)
@@ -51,7 +59,8 @@ function CalendarView() {
             <div key="header">
                 <div className="header">{calendar.title}:
                     <button className="back-button">share calendar</button>
-                    <button className="back-button">delete calendar</button>
+                    <button className="back-button" 
+                                onClick={() => deleteCalendar(calendar.id)}>delete calendar</button>
                 </div>
                 <hr className="rounded"></hr>
                 <div className="date">{months[date[1]-1]}, {date[0]}</div>

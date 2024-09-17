@@ -1,9 +1,11 @@
 import React, { useState } from "react"
+import { Outlet, useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
 function LoginForm({ onLogin }) {
 
+  const navigate = useNavigate()
   const [errors, setErrors] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
@@ -25,7 +27,10 @@ function LoginForm({ onLogin }) {
       }).then(
         (response) => {
           setIsLoading(false);
-          if (response.ok) { response.json().then((user) => onLogin(user)) }
+          if (response.ok) { 
+            navigate("/CalendarList")
+            response.json().then((user) => onLogin(user)) 
+          }
           else { response.json().then((err) => setErrors(err.errors)) }
         }
       )

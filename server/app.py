@@ -9,7 +9,7 @@ from sqlalchemy.exc import IntegrityError
 
 # Local imports
 from config import app, db, api
-from models import User, Calendar, User_Calendar, Note, Reminder
+from models import User, Calendar, User_Calendar, Note
 
 @app.route('/')
 def index():
@@ -155,14 +155,8 @@ class NoteByCalendarID(Resource):
             return {'error':'422 cannot process request'}, 422
         
 class NoteByID(Resource):
-    def get(self, noteID):
-        note = Note.query.filter(Note.id == id).one_or_none()
-        if note is None:
-            return make_response({'error': 'Note not found'}, 404)
-        return note, 200
-
     def delete(self, noteID):
-        note = Note.query.filter(Note.id == id).one_or_none()
+        note = Note.query.filter(Note.id == noteID).one_or_none()
         if note is None:
             return make_response({'error': 'Note not found'}, 404)
         db.session.delete(note)
