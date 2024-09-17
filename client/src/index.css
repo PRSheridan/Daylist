@@ -153,7 +153,10 @@ hr.rounded {
   }
 
   .note-card-content {
+	margin-left: 50px;
 	font-size: 16px;
+	width: 400px;
+	text-wrap: pretty;
   }
 
   .note-count {
@@ -168,4 +171,9 @@ hr.rounded {
 
   .new {
 	background-color: #81d8acb9;
+}
+
+#new-calendar-container {
+	width: 400px;
+	height: 400px;
 }

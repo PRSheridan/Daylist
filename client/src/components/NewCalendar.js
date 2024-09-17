@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
-function NewCalendar() {
-
-    const navigate = useNavigate()
+function NewCalendar( {onClose} ) {
     const [errors, setErrors] = useState([])
 
     const formSchema = yup.object().shape({
-        title: yup.string().required("Must enter a title"),
-      });
+        title: yup.string().required("Must enter a title").max(24),
+    });
 
     const formik = useFormik({
         initialValues: { title: "" },
@@ -24,7 +21,7 @@ function NewCalendar() {
             body: JSON.stringify(values, null, 1),
             }).then(
             (response) => {
-                if (response.ok) { navigate("/CalendarList") }
+                if (response.ok) { onClose() }
                 else { response.json().then((err) => setErrors(err.errors)) }
             }
             )
@@ -32,7 +29,7 @@ function NewCalendar() {
     })
 
     return (
-        <>
+        <a id="new-calendar-container">
             <h2>New Calendar:</h2>
             <form onSubmit={ formik.handleSubmit }>
                 <div>
@@ -47,9 +44,10 @@ function NewCalendar() {
                 </div>
             <div>
                 <button type="submit">Create calendar</button>
+                <button onClick={()=> onClose()}>cancel</button>
             </div>
             </form>
-        </>
+        </a>
     )
 }
 

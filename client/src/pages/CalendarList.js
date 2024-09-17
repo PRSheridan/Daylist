@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NewCalendar from '../components/NewCalendar'
 
-function CalendarList({ user }) {
+function CalendarList() {
     const navigate = useNavigate()
     const [calendars, setCalendars] = useState([])
+    const [showNewCalendar, setShowNewCalendar] = useState(false)
 
     useEffect(() => {
         fetch("/calendars")
         .then((response) => response.json())
         .then(setCalendars)
-    }, [])
+    }, [showNewCalendar])
     
     return (
         <>
-        <div className="header">Calendars:</div>
+            <div className="header">Calendars:</div>
             <hr className="rounded"></hr>
+            { showNewCalendar ? <NewCalendar onClose={() => setShowNewCalendar(false)}/> : 
             <div id="calendar-list"> { calendars.length > 0 ? ( calendars.map((calendar) => (
                 <a className="card" 
                     key={calendar.title}  
@@ -24,10 +27,10 @@ function CalendarList({ user }) {
             ))) : (
                 <div className="alert"> No calendars found </div> 
             )}
-                <a className="card new" onClick={() => navigate("/NewCalendar")}>
+                <a className="card new" onClick={() => setShowNewCalendar(true)}>
                     + New
                 </a>
-            </div>
+            </div>}
 
         </>
     )

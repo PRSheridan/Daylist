@@ -3,20 +3,17 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
-function NewNote() {
+function NewNote( {onClose, calendarID, date } ) {
     const navigate = useNavigate()
     const location = useLocation()
     const [errors, setErrors] = useState([])
-    const calendarID = location.state.calendarID
-    const selectedDate = location.state.date
-    const filteredNotes = location.state.notes
 
-    const year = selectedDate[0]
-    const month = selectedDate[1]
-    const day = selectedDate [2]
+    const year = date[0]
+    const month = date[1]
+    const day = date [2]
 
     const formSchema = yup.object().shape({
-        title: yup.string().required("Note must have a title"),
+        title: yup.string().required("Note must have a title").max(24),
         content: yup.string().required("Note must have content"),
       });
 
@@ -44,10 +41,8 @@ function NewNote() {
     })
 
     return (
-        <>
-            <div className="header">New note:</div>
-            <hr className="rounded"></hr>
-            <div>{selectedDate[0]}, {selectedDate[1]}, {selectedDate[2]}:</div>
+        <a id="new-note-container">
+            <h2>New note:</h2>
             <form onSubmit={ formik.handleSubmit }>
                 <div>
                     <div>Enter note title:</div>
@@ -71,9 +66,10 @@ function NewNote() {
                 </div>
             <div>
                 <button type="submit">Create note</button>
+                <button onClick={()=> onClose()}>cancel</button>
             </div>
             </form>
-        </>
+        </a>
     )
 }
 
