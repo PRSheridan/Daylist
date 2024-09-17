@@ -122,6 +122,35 @@ class CalendarByID(Resource):
             db.session.commit()
             return make_response({}, 204)
         
+class UserCalendarByID(Resource):
+    def get(self, calendarID):
+        shared_user_ids = []
+        shared_usernames = []
+        user_calendars = User_Calendar.query.filter(User_Calendar.calendar_id==calendarID).all()
+        for relationship in user_calendars:
+            shared_user_ids.append(relationship.user_id)
+        for user_id in shared_user_ids:
+            shared_usernames.append(User.query.filter(User.id == user_id).first().username)
+        return shared_usernames, 200
+    
+    def post(self, calendarID):
+        data = request.get_json()
+        new_user = User.query.filter(User.username == data['username']).one_or_none()
+        if new_user is None:
+            return make_response({'error': 'Username not found'}, 404)
+        try:
+            user_calendar = User_Calendar(
+                user_id=new_user.id,
+                calendar_id=calendarID
+            )
+
+            db.session.add(user_calendar)
+            db.session.commit()
+            return user_calendar.to_dict(), 200
+        except IntegrityError:
+            return {'error':'422 cannot process request'}, 422
+
+        
 class NoteByCalendarID(Resource):
     def get(self, calendarID):
         notes = Note.query.filter(Note.calendar_id == calendarID).all()
@@ -170,6 +199,7 @@ api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CalendarIndex, '/calendars')
 api.add_resource(CalendarByID, '/calendar/<int:id>')
+api.add_resource(UserCalendarByID, '/share/<int:calendarID>')
 api.add_resource(NoteByCalendarID, '/calendar_notes/<int:calendarID>')
 api.add_resource(NoteByID, '/note/<int:noteID>')
 

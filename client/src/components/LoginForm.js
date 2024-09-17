@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
@@ -18,6 +18,7 @@ function LoginForm({ onLogin }) {
     initialValues: { username: "", password: "", },
     validationSchema: formSchema,
     onSubmit: (values) => {
+      setIsLoading(true);
       fetch("/login", {
         method: "POST",
         headers: {
@@ -30,10 +31,9 @@ function LoginForm({ onLogin }) {
           if (response.ok) { 
             navigate("/CalendarList")
             response.json().then((user) => onLogin(user)) 
-          }
-          else { response.json().then((err) => setErrors(err.errors)) }
-        }
-      )
+          } else {
+            response.json().then((err) => setErrors(err.errors));
+      }})
     },
   })
 
@@ -49,6 +49,7 @@ function LoginForm({ onLogin }) {
               value={ formik.values.username }
               onChange={ formik.handleChange }
               />
+              <p style={{ color: "red" }}> {formik.errors.username}</p>
           </div>
           <div>
               <div>Password</div>
@@ -59,6 +60,7 @@ function LoginForm({ onLogin }) {
               value={ formik.values.password }
               onChange={ formik.handleChange }
               />
+              <p style={{ color: "red" }}> {formik.errors.password}</p>
           </div>
           <div>
               <button type="submit">{ isLoading ? "Loading..." : "Login" }</button>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NewNote from '../components/NewNote';
 
@@ -22,7 +22,7 @@ function NoteView() {
     
     return (
         <div id="note-container">
-            <button className="back-button"
+            <button className="nav-button"
                     onClick={() => navigate("/calendar", {state: {calendarID}})}>
                     return to calendar view
             </button>
@@ -35,9 +35,9 @@ function NoteView() {
             <div id="note-list"> { notes.length > 0 ? ( notes.map((note) => (
                 <div key={note.id}>
                     <a className="note-card"> {note.title}
-                        <button className="back-button" 
+                        <button className="nav-button">edit note</button>
+                        <button className="nav-button" 
                                 onClick={() => deleteNote(note.id)}>delete note</button>
-                        <button className="back-button">edit note</button>
                         <p className="note-card-content">{note.content} </p>
                     </a>
                 </div>

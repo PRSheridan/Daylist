@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ShareForm from '../components/ShareForm'
 
 function CalendarView() {
     const navigate = useNavigate()
@@ -8,7 +9,7 @@ function CalendarView() {
     const [calendar, setCalendar] = useState([])
     const [notes, setNotes] = useState([])
     const [date, setDate] = useState([9999, 1, 1])
-
+    const [showShareForm, setShowShareForm] = useState(false)
     const calendarID = location.state.calendarID
     const today = new Date()
     
@@ -58,9 +59,11 @@ function CalendarView() {
         days.push(
             <div key="header">
                 <div className="header">{calendar.title}:
-                    <button className="back-button">share calendar</button>
-                    <button className="back-button" 
-                                onClick={() => deleteCalendar(calendar.id)}>delete calendar</button>
+                    <button className="nav-button"
+                            onClick={() => setShowShareForm(true)}>share calendar</button>
+                    <button className="nav-button">edit calendar</button>
+                    <button className="nav-button" 
+                            onClick={() => deleteCalendar(calendar.id)}>delete calendar</button>
                 </div>
                 <hr className="rounded"></hr>
                 <div className="date">{months[date[1]-1]}, {date[0]}</div>
@@ -84,7 +87,9 @@ function CalendarView() {
 
     return (
         <div id='month-container'>
-            { buildMonth(date) }
+            {showShareForm ? <ShareForm onClose={() => { setShowShareForm(false) }}
+                                        calendar={calendar}/> 
+                            : buildMonth(date) }
         </div>
     )
 }
