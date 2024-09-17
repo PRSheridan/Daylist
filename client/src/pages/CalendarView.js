@@ -58,7 +58,8 @@ function CalendarView() {
         
         days.push(
             <div key="header">
-                <div className="header">{calendar.title}:
+                <div id="calendar-title" className="in-line">{calendar.title}:</div>
+                <div className="button-container in-line">
                     <button className="nav-button"
                             onClick={() => setShowShareForm(true)}>share calendar</button>
                     <button className="nav-button">edit calendar</button>
