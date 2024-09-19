@@ -10,8 +10,8 @@ function Login({onLogin}) {
             {showLogin ? (
                 <>
                     <LoginForm onLogin={onLogin} />
-                    <p>No account? Create one here
-                    <button onClick={() => setShowLogin(false)}>
+                    <p className="footer">No account? Create one here
+                    <button className="login-button" onClick={() => setShowLogin(false)}>
                         Signup
                     </button>
                     </p>
@@ -19,8 +19,8 @@ function Login({onLogin}) {
             ) : (
                 <>
                     <SignupForm onLogin={onLogin} />
-                    <p>Already Have an Account? Sign in Here
-                    <button onClick={() => setShowLogin(true)}>
+                    <p className="footer">Already have an account? Sign in here
+                    <button className="login-button" onClick={() => setShowLogin(true)}>
                         Login
                     </button>
                     </p>

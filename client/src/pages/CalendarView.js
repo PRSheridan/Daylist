@@ -1,17 +1,22 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ShareForm from '../components/ShareForm'
+import EditForm from '../components/EditForm'
 
 function CalendarView() {
     const navigate = useNavigate()
     const location = useLocation()
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
     const [calendar, setCalendar] = useState([])
     const [notes, setNotes] = useState([])
     const [date, setDate] = useState([9999, 1, 1])
-    const [showShareForm, setShowShareForm] = useState(false)
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December']
     const calendarID = location.state.calendarID
     const today = new Date()
+
+    const [showShareForm, setShowShareForm] = useState(false)
+    const [showEditForm, setShowEditForm] = useState(false)
     
     useEffect(() => {
         formatDate(today)
@@ -22,7 +27,7 @@ function CalendarView() {
         fetch(`/calendar_notes/${calendarID}`)
         .then((response) => response.json())
         .then(setNotes)
-    }, [])
+    }, [showEditForm])
 
     function daySelect(day, filteredNotes) {
         const selectedDate = [date[0], date[1], day]
@@ -61,13 +66,18 @@ function CalendarView() {
                 <div id="calendar-title" className="in-line">{calendar.title}:</div>
                 <div className="button-container in-line">
                     <button className="nav-button"
-                            onClick={() => setShowShareForm(true)}>share calendar</button>
-                    <button className="nav-button">edit calendar</button>
+                            onClick={() => setShowShareForm(!showShareForm)}>share calendar</button>
+                    <button className="nav-button"
+                            onClick={() => setShowEditForm(!showEditForm)}>edit calendar</button>
                     <button className="nav-button" 
                             onClick={() => deleteCalendar(calendar.id)}>delete calendar</button>
                 </div>
                 <hr className="rounded"></hr>
                 <div className="date">{months[date[1]-1]}, {date[0]}</div>
+                {showShareForm ? <ShareForm onClose={() => { setShowShareForm(false) }}
+                                        calendar={calendar}/> : <></>}
+                {showEditForm ? <EditForm onClose={() => { setShowEditForm(false) }}
+                                        calendar={calendar}/> : <></>}
             </div>
         )
 
@@ -88,9 +98,7 @@ function CalendarView() {
 
     return (
         <div id='month-container'>
-            {showShareForm ? <ShareForm onClose={() => { setShowShareForm(false) }}
-                                        calendar={calendar}/> 
-                            : buildMonth(date) }
+            { buildMonth(date) }
         </div>
     )
 }

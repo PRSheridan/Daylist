@@ -112,6 +112,18 @@ class CalendarByID(Resource):
                 return make_response({'error': 'Calendar not found'}, 404)
             return make_response(calendar.to_dict(), 200)
         
+    def post(self, id):
+        data = request.get_json()
+        calendar = Calendar.query.filter(Calendar.id == id).one_or_none()
+        try:
+            calendar.title = data['title']
+            db.session.add(calendar)
+            db.session.commit()
+            return calendar.to_dict(), 200
+        
+        except IntegrityError:
+            return {'error':'422 cannot process request'}, 422
+        
     def delete(self, id):
         user_id = session.get('user_id')
         if user_id:

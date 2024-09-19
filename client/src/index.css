@@ -8,10 +8,18 @@
 /* General Shaping */
 .header {
   margin-left: 20px;
-  width: 380px;
+  width: 500px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 40px;
 }
+
+.footer {
+	margin-left: 20px;
+	width: 500px;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 20px;
+}
+
 
 .date {
 	text-align: center;
@@ -40,6 +48,42 @@ hr.rounded {
 	display:inline-block;
 }
 
+/* Login */
+.login {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 20px;
+}
+
+.login-button {
+	display: inline-block;
+	height: 26px;
+	margin: 5px;
+	background-color: #3b97eeb9;
+	border-radius: 10px;
+	overflow: hidden;
+	text-align: center;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 15px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.12);
+	transition: all 0.2s;
+
+  &:hover {
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
+    top: -2px;
+    transform: translateY(-2px);
+    }
+  
+    &:active {
+      box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
+      transform: translateY(2px);
+    }
+}
+
+#login-container {
+	margin-top: 20px;
+	margin-left: 40px;
+}
+
 /* Calendar */
 #month-container {
 	width: 600px;
@@ -48,9 +92,10 @@ hr.rounded {
 
 #calendar-title {
 	margin-left: 20px;
-	width: 380px;
+	max-width: 440px;
+	max-height: 10px;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 40px;
+	font-size: 3em;
 	position: absolute;
 	top: 2px;
 }
@@ -111,6 +156,61 @@ hr.rounded {
 	height: 400px;
 }
 
+#share-container {
+	text-align: center;
+	border-radius: 10px;
+	margin: 10px;
+	background-color: #81d8ac5e;
+}
+
+.shared-users {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 16px;
+	width: 200px;
+	margin: 10px;
+	vertical-align:top;
+}
+
+.shared-form {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 20px;
+	vertical-align:top;
+	margin: 10px;
+	margin-left: 80px
+}
+
+.edit-form {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 20px;
+	vertical-align:top;
+	margin: 10px;
+}
+
+.shared-button {
+	display: inline-block;
+	height: 26px;
+	margin: 2px;
+	background-color: #f55d5db9;
+	border-radius: 10px;
+	overflow: hidden;
+	text-align: center;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 15px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.12);
+	transition: all 0.2s;
+
+  &:hover {
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
+    top: -2px;
+    transform: translateY(-2px);
+    }
+  
+    &:active {
+      box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
+      transform: translateY(2px);
+    }
+}
+
 /* Notes */
 #note-container {
 	width: 600px;
@@ -155,15 +255,17 @@ hr.rounded {
 /* Navigation */
 .nav-link {
 	display: inline-block;
-	  height: 23px;
-	  margin: 5px;
-	  padding-left: 5px;
-	  padding-right: 5px;
-	  padding-top: 2px;
-	  background-color: #3b97eeb9;
-	  border-radius: 10px;
-	  overflow: hidden;
-	  text-align: center;
+	height: 23px;
+	margin: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	background-color: #3b97eeb9;
+	border-radius: 10px;
+	overflow: hidden;
+	text-align: center;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 15px;
 	box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.12);
 	  transition: all 0.2s;
   
@@ -187,19 +289,21 @@ hr.rounded {
 	border-radius: 10px;
 	overflow: hidden;
 	text-align: center;
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.12);
-	transition: all 0.2s;
-
-  &:hover {
-    box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
-    top: -2px;
-    transform: translateY(-2px);
-    }
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 15px;
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.12);
+	  transition: all 0.2s;
   
-    &:active {
-      box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
-      transform: translateY(2px);
-    }
+	&:hover {
+	  box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
+	  top: -2px;
+	  transform: translateY(-2px);
+	  }
+	
+	  &:active {
+		box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
+		transform: translateY(2px);
+	  }
 }
 
 .new {

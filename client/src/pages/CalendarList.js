@@ -17,7 +17,7 @@ function CalendarList() {
         <>
             <div className="header">Calendars:</div>
             <hr className="rounded"></hr>
-            { showNewCalendar ? <NewCalendar onClose={() => setShowNewCalendar(false)}/> : 
+            { showNewCalendar ? <NewCalendar onClose={() => setShowNewCalendar(false)}/> : <></>}
             <div id="calendar-list"> { calendars.length > 0 ? ( calendars.map((calendar) => (
                 <a className="card" 
                     key={calendar.title}  
@@ -30,7 +30,7 @@ function CalendarList() {
                 <a className="card new" onClick={() => setShowNewCalendar(true)}>
                     + New
                 </a>
-            </div>}
+            </div>
 
         </>
     )

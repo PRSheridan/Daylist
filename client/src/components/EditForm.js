@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
-function ShareForm( {onClose, calendar} ) {
+function EditForm( {onClose, calendar} ) {
     const [errors, setErrors] = useState([])
-    const [sharedUsers, setSharedUsers] = useState([])
-
-    useEffect(() => {
-        fetch(`/share/${calendar.id}`)
-        .then((response) => response.json())
-        .then(setSharedUsers)
-    }, [])
 
     const formSchema = yup.object().shape({
-        username: yup.string().required("Must enter a username"),
+        title: yup.string().required("Must enter a new title"),
     });
 
     const formik = useFormik({
-        initialValues: { username: "" },
+        initialValues: { title: calendar.title },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch(`/share/${calendar.id}`, {
+            fetch(`/calendar/${calendar.id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -37,28 +30,24 @@ function ShareForm( {onClose, calendar} ) {
 
     return (
         <div id="share-container">
-            <form className="shared-form in-line" onSubmit={ formik.handleSubmit }>
+            <form className="edit-form" onSubmit={ formik.handleSubmit }>
                 <div>
-                    <div>Share with (Enter username):</div>
+                    <div>Enter a new title:</div>
                     <input
                     type="text"
-                    id="username"
+                    id="title"
                     autoComplete="off"
-                    value={ formik.values.username }
+                    value={ formik.values.title }
                     onChange={ formik.handleChange }
                     />
                 </div>
             <div>
-                <button className="shared-button" type="submit">Share calendar</button>
+                <button className="shared-button" type="submit">Change title</button>
                 <button className="shared-button" onClick={()=> onClose()}>cancel</button>
-                <a style={{ color: "red" }}> {formik.errors.username}</a>
             </div>
             </form>
-            <div className="shared-users in-line">Shared with: {sharedUsers.map(
-                (sharedUser) => ( <div key={sharedUser}>{sharedUser}</div> ))}
-            </div>
         </div>
     )
 }
 
-export default ShareForm
+export default EditForm

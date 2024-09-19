@@ -39,31 +39,33 @@ function LoginForm({ onLogin }) {
 
   return (
       <form onSubmit={ formik.handleSubmit }>
-          <div>Login</div>
-          <div>
-              <div>Username</div>
-              <input
-              type="text"
-              id="username"
-              autoComplete="off"
-              value={ formik.values.username }
-              onChange={ formik.handleChange }
-              />
-              <p style={{ color: "red" }}> {formik.errors.username}</p>
-          </div>
-          <div>
-              <div>Password</div>
-              <input
-              type="password"
-              id="password"
-              autoComplete="off"
-              value={ formik.values.password }
-              onChange={ formik.handleChange }
-              />
-              <p style={{ color: "red" }}> {formik.errors.password}</p>
-          </div>
-          <div>
-              <button type="submit">{ isLoading ? "Loading..." : "Login" }</button>
+          <div className="header">Daylist login</div>
+          <div id="login-container">
+            <div>
+                <div className="login">Username</div>
+                <input
+                type="text"
+                id="username"
+                autoComplete="off"
+                value={ formik.values.username }
+                onChange={ formik.handleChange }
+                />
+                <a style={{ color: "red" }}> {formik.errors.username}</a>
+            </div>
+            <div>
+                <div className="login">Password</div>
+                <input
+                type="password"
+                id="password"
+                autoComplete="off"
+                value={ formik.values.password }
+                onChange={ formik.handleChange }
+                />
+                <a style={{ color: "red" }}> {formik.errors.password}</a>
+            </div>
+            <div>
+                <button className="login-button" type="submit">{ isLoading ? "Loading..." : "Login" }</button>
+            </div>
           </div>
       </form>
   )
