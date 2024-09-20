@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import {useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
-function EditNote( {onClose, note} ) {
+function EditNote( {onClose, note, calendarID} ) {
     const [errors, setErrors] = useState([])
+    const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
         year: yup.string().required("Must enter a year"),
@@ -23,14 +25,14 @@ function EditNote( {onClose, note} ) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch(`/calendar_notes/${calendarID}`, {
+            fetch(`/note/${note.id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(values, null, 1),
             }).then((response) => {
-                if (response.ok) { navigate(`/calendar/`, {state: {calendarID}}) }
+                if (response.ok) {navigate("/calendar", {state: {calendarID}})}
                 else { response.json().then((err) => setErrors(err.errors)) }
             })
         },
@@ -40,53 +42,53 @@ function EditNote( {onClose, note} ) {
         <div id="share-container">
             <form onSubmit={ formik.handleSubmit }>
                 <div>
-                    <div>Enter note year:</div>
+                    <div className="form-field">Enter note year:</div>
                     <input
-                    type="text"
-                    id="year"
-                    autoComplete="off"
-                    value={ formik.values.year }
-                    onChange={ formik.handleChange }
+                        type="text"
+                        id="year"
+                        autoComplete="off"
+                        value={ formik.values.year }
+                        onChange={ formik.handleChange }
                     />
                 </div>
                 <div>
-                    <div>Enter note month:</div>
+                    <div className="form-field">Enter note month:</div>
                     <input
-                    type="text"
-                    id="month"
-                    autoComplete="off"
-                    value={ formik.values.month }
-                    onChange={ formik.handleChange }
+                        type="text"
+                        id="month"
+                        autoComplete="off"
+                        value={ formik.values.month }
+                        onChange={ formik.handleChange }
                     />
                 </div>
                 <div>
-                    <div>Enter note day:</div>
+                    <div className="form-field">Enter note day:</div>
                     <input
-                    type="text"
-                    id="day"
-                    autoComplete="off"
-                    value={ formik.values.day }
-                    onChange={ formik.handleChange }
+                        type="text"
+                        id="day"
+                        autoComplete="off"
+                        value={ formik.values.day }
+                        onChange={ formik.handleChange }
                     />
                 </div>
                 <div>
-                    <div>Enter note title:</div>
+                    <div className="form-field">Enter note title:</div>
                     <input
-                    type="text"
-                    id="title"
-                    autoComplete="off"
-                    value={ formik.values.title }
-                    onChange={ formik.handleChange }
+                        type="text"
+                        id="title"
+                        autoComplete="off"
+                        value={ formik.values.title }
+                        onChange={ formik.handleChange }
                     />
                 </div>
                 <div>
-                    <div>Enter note content:</div>
-                    <input
-                    type="text"
-                    id="content"
-                    autoComplete="off"
-                    value={ formik.values.content }
-                    onChange={ formik.handleChange }
+                    <div className="form-field">Enter note content:</div>
+                    <textarea   
+                        type="text"
+                        id="content"
+                        autoComplete="off"
+                        value={ formik.values.content }
+                        onChange={ formik.handleChange } rows="4" cols="50"
                     />
                 </div>
             <div>
@@ -98,4 +100,4 @@ function EditNote( {onClose, note} ) {
     )
 }
 
-export default EditForm
+export default EditNote

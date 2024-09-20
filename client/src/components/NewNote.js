@@ -40,35 +40,35 @@ function NewNote( {onClose, calendarID, date } ) {
     })
 
     return (
-        <a id="new-note-container">
-            <h2>New note:</h2>
+        <div className="new-form">
+            <div>New note:</div>
             <form onSubmit={ formik.handleSubmit }>
                 <div>
-                    <div>Enter note title:</div>
+                    <div className="form-field">Enter note title:</div>
                     <input
-                    type="text"
-                    id="title"
-                    autoComplete="off"
-                    value={ formik.values.title }
-                    onChange={ formik.handleChange }
+                        type="text"
+                        id="title"
+                        autoComplete="off"
+                        value={ formik.values.title }
+                        onChange={ formik.handleChange }
                     />
                 </div>
                 <div>
-                    <div>Enter note content:</div>
-                    <input
-                    type="text"
-                    id="content"
-                    autoComplete="off"
-                    value={ formik.values.content }
-                    onChange={ formik.handleChange }
+                    <div className="form-field">Enter note content:</div>
+                    <textarea   
+                        type="text"
+                        id="content"
+                        autoComplete="off"
+                        value={ formik.values.content }
+                        onChange={ formik.handleChange } rows="4" cols="50"
                     />
                 </div>
             <div>
-                <button classsName="button new" type="submit">Create note</button>
-                <button classsName="button delete" onClick={()=> onClose()}>cancel</button>
+                <button className="button new" type="submit">Create note</button>
+                <button className="button delete" onClick={()=> onClose()}>cancel</button>
             </div>
             </form>
-        </a>
+        </div>
     )
 }
 

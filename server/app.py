@@ -203,6 +203,26 @@ class NoteByID(Resource):
         db.session.delete(note)
         db.session.commit()
         return make_response({}, 204)
+    
+    def post(self, noteID):
+        currentNote = Note.query.filter(Note.id == noteID).one_or_none()
+        if currentNote is None:
+            return make_response({'error': 'Note not found'}, 404)
+        data = request.get_json()
+
+        try:
+            currentNote.year = data['year']
+            currentNote.month = data['month']
+            currentNote.day = data['day']
+            currentNote.title = data['title']
+            currentNote.content = data['content']
+
+            db.session.add(currentNote)
+            db.session.commit()
+
+            return currentNote.to_dict(), 200
+        except IntegrityError:
+            return {'error':'422 cannot process request'}, 422
         
 
 api.add_resource(CheckSession, '/check_session')

@@ -15,6 +15,7 @@ html, body {
 /* General Shaping */
 .header {
 	background-color: #f1f2ed;
+	min-height: 110px;
 	height:auto;
 	margin:0px;
 }
@@ -131,6 +132,12 @@ hr.rounded {
 	position: relative;
 }
 
+#notes-container {
+	padding: 10px;
+	margin:auto;
+	width: 600px;
+}
+
 #calendar-title {
 	margin-top: 4px;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -140,7 +147,7 @@ hr.rounded {
 }
 
 .date {
-	color: #cbccc6;
+	color: #b5b6b0;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 28px;
 	text-decoration:underline;
@@ -149,6 +156,21 @@ hr.rounded {
 .center {
 	margin-top: 20px;
 	text-align: center;
+}
+
+.new-form {
+	margin: 10px;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 24px;
+	border-radius: 10px;
+	text-align: center;
+	margin: 10px;
+	background-color: #8aeebc5e;
+}
+
+.form-field {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 16px;
 }
 
 .calendar-container {
@@ -231,7 +253,7 @@ hr.rounded {
 	text-align: center;
 	border-radius: 10px;
 	margin: 10px;
-	background-color: #81d8ac5e;
+	background-color: #8aeebc5e;
 }
 
 .shared-users {
@@ -264,24 +286,52 @@ hr.rounded {
 }
 
 .note-card {
-	display: inline-block;
-	  width: 500px;
-	  padding: 4px;
-	  margin: 2px;
-	  margin-left: 50px;
-	  background-color: #3b97eeb9;
-	  border-radius: 10px;
-	  overflow: hidden;
-	  text-align: center;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 22px;
-  }
+	font-size: 16px;
+	width: 500px;
+	padding: 4px;
+	background-color: #3b97eeb9;
+	border-radius: 15px;
+	overflow:hidden;
+	margin-left: 50px;
+	margin-bottom: 10px;
+	color: #fff;
+}
+
+.new-note-card {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 20px;
+	text-align: center;
+	height: 30px;
+}
+
+.note-header {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.note-title {
+	margin-left: 100px;
+	text-align: center;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 30px;
+	flex-grow: 1;
+}
+
+.note-buttons {
+    display: flex;
+	flex-direction: column;
+}
 
 .note-card-content {
-	margin-left: 50px;
-	font-size: 16px;
-	width: 400px;
+	padding: 20px;
+	padding-bottom: 2px;
+	padding-top: 2px;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 18px;
 	text-wrap: pretty;
+	text-align: center;
   }
 
 .note-count {

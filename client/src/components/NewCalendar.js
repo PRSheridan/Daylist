@@ -29,25 +29,23 @@ function NewCalendar( {onClose} ) {
     })
 
     return (
-        <a id="new-calendar-container">
-            <h2>New Calendar:</h2>
+        <div className="new-form">
+            <div>New Calendar:</div>
             <form onSubmit={ formik.handleSubmit }>
-                <div>
-                    <div>Enter calendar title:</div>
-                    <input
-                    type="text"
-                    id="title"
-                    autoComplete="off"
-                    value={ formik.values.title }
-                    onChange={ formik.handleChange }
-                    />
-                </div>
+                <div className="form-field">Enter calendar title:</div>
+                <input
+                type="text"
+                id="title"
+                autoComplete="off"
+                value={ formik.values.title }
+                onChange={ formik.handleChange }
+                />
             <div>
                 <button className="button new" type="submit">Create calendar</button>
                 <button className="button delete" onClick={()=> onClose()}>cancel</button>
             </div>
             </form>
-        </a>
+        </div>
     )
 }
 
