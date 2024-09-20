@@ -44,11 +44,22 @@ html, body {
 }
 
 #app-container {
-	background-color: #ffffff;
+	background-color: #fff;
 	height: 88vh;
 	margin-left: 3vw;
 	margin-right: 3vw;
 }
+
+.fade-in-text {
+	font-family: Arial;
+	font-size: 60px;
+	animation: fadeIn 1s;
+  }
+  
+  @keyframes fadeIn {
+	0% { opacity: 0; }
+	100% { opacity: 1; }
+  }
 
 .date {
 	margin:10px;
@@ -79,6 +90,8 @@ hr.rounded {
 	height: 26px;
 	margin: 5px;
 	background-color: #3b97eeb9;
+	border-width: 0.1px;
+	border-color: #d4d4d473;
 	border-radius: 10px;
 	overflow: hidden;
 	text-align: center;
@@ -88,7 +101,7 @@ hr.rounded {
 	transition: all 0.2s;
 
   &:hover {
-    box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 4px 3px -2px rgba(0,0,0,.2),0 3px 6px 0 rgba(0,0,0,.12);
     top: -2px;
     transform: translateY(-2px);
     }
@@ -109,31 +122,6 @@ hr.rounded {
 	font-size: 20px;
 }
 
-.login-button {
-	display: inline-block;
-	height: 26px;
-	margin: 5px;
-	background-color: #3b97eeb9;
-	border-radius: 10px;
-	overflow: hidden;
-	text-align: center;
-	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 15px;
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.12);
-	transition: all 0.2s;
-
-  &:hover {
-    box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
-    top: -2px;
-    transform: translateY(-2px);
-    }
-  
-    &:active {
-      box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
-      transform: translateY(2px);
-    }
-}
-
 #login-container {
 	margin-top: 20px;
 	margin-left: 40px;
@@ -142,19 +130,21 @@ hr.rounded {
 /* Calendar */
 
 #calendar-list {
-	margin-left: 30vw;
-	margin-right: 30vw;
+	width: 800px;
+	margin-left: 20vw;
+	margin-right: 20vw;
 }
 
 #month-container {
-	margin-left: 30vw;
-	margin-right: 30vw;
+	padding: 40px;
+	margin:auto;
 	width: 600px;
 	position: relative;
 }
 
 #calendar-title {
-	margin-left: 20px;
+	margin-top: 35px;
+	margin-left: 10px;
 	max-width: 440px;
 	max-height: 10px;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -165,15 +155,12 @@ hr.rounded {
 
 .card {
 	display: inline-block;
-	width: 160px;
-	height: 160px;
-	margin: 4px;
+	width: 180px;
+	height: 180px;
+	margin: 5px;
 	background-color: #3b97eeb9;
 	border-radius: 10px;
 	overflow: hidden;
-	text-align: center;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 26px;
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
 	transition: all 0.3s;
 	
@@ -187,6 +174,16 @@ hr.rounded {
 		box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
 		transform: translateY(2px);
 	}
+}
+
+.card-title{
+	text-align: center;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 26px;
+	color: #f1f2ed;
+	font-size: 30px;
+	font-weight: 500;
+	margin-top: 20%;
 }
 
 .day-card {
@@ -247,31 +244,6 @@ hr.rounded {
 	font-size: 20px;
 	vertical-align:top;
 	margin: 10px;
-}
-
-.shared-button {
-	display: inline-block;
-	height: 26px;
-	margin: 2px;
-	background-color: #f55d5db9;
-	border-radius: 10px;
-	overflow: hidden;
-	text-align: center;
-	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 15px;
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.12);
-	transition: all 0.2s;
-
-  &:hover {
-    box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
-    top: -2px;
-    transform: translateY(-2px);
-    }
-  
-    &:active {
-      box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
-      transform: translateY(2px);
-    }
 }
 
 /* Notes */

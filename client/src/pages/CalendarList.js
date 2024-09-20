@@ -6,11 +6,16 @@ function CalendarList() {
     const navigate = useNavigate()
     const [calendars, setCalendars] = useState([])
     const [showNewCalendar, setShowNewCalendar] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+        setIsLoading(true);
         fetch("/calendars")
         .then((response) => response.json())
-        .then(setCalendars)
+        .then((data) => {
+            setIsLoading(false)
+            setCalendars(data)
+        })
     }, [showNewCalendar])
     
     return (
@@ -18,16 +23,16 @@ function CalendarList() {
             <div className="header-text">Calendars:</div>
             { showNewCalendar ? <NewCalendar onClose={() => setShowNewCalendar(false)}/> : <></>}
             <div> { calendars.length > 0 ? ( calendars.map((calendar) => (
-                <a className="card" 
+                <a className="card fade-in-text" 
                     key={calendar.title}  
                     onClick={() => navigate("/Calendar", {state: {calendarID: calendar.id}})}>
-                    {calendar.title}
+                    <div className="card-title">{calendar.title}</div>
                 </a>
             ))) : (
-                <div className="alert"> No calendars found </div> 
-            )}
-                <a className="card new" onClick={() => setShowNewCalendar(true)}>
-                    + New
+                isLoading ? <div className="header-text">LOADING...</div> : <div className="alert"> No calendars found </div>
+            )} 
+                <a className="card new fade-in-text" onClick={() => setShowNewCalendar(true)}>
+                    <div className="card-title">+ new calendar</div>
                 </a>
             </div>
 

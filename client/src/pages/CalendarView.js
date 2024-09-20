@@ -63,13 +63,13 @@ function CalendarView() {
         
         days.push(
             <div key="header">
-                <div id="calendar-title" className="in-line">{calendar.title}:</div>
+                <div id="calendar-title" className="header-text in-line">{calendar.title}:</div>
                 <div className="button-container in-line">
-                    <button className="nav-button new"
+                    <button className="button new"
                             onClick={() => setShowShareForm(!showShareForm)}>share calendar</button>
-                    <button className="nav-button edit"
+                    <button className="button edit"
                             onClick={() => setShowEditForm(!showEditForm)}>edit calendar</button>
-                    <button className="nav-button delete" 
+                    <button className="button delete" 
                             onClick={() => deleteCalendar(calendar.id)}>delete calendar</button>
                 </div>
                 <div className="date">{months[date[1]-1]}, {date[0]}</div>
