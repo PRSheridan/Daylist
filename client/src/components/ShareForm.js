@@ -49,8 +49,8 @@ function ShareForm( {onClose, calendar} ) {
                     />
                 </div>
             <div>
-                <button className="shared-button" type="submit">Share calendar</button>
-                <button className="shared-button" onClick={()=> onClose()}>cancel</button>
+                <button className="button edit" type="submit">Share calendar</button>
+                <button className="button delete" onClick={()=> onClose()}>cancel</button>
                 <a style={{ color: "red" }}> {formik.errors.username}</a>
             </div>
             </form>

@@ -39,7 +39,7 @@ function LoginForm({ onLogin }) {
 
   return (
       <form onSubmit={ formik.handleSubmit }>
-          <div className="header">Daylist login</div>
+          <div className="header-text">Login</div>
           <div id="login-container">
             <div>
                 <div className="login">Username</div>
@@ -64,7 +64,7 @@ function LoginForm({ onLogin }) {
                 <a style={{ color: "red" }}> {formik.errors.password}</a>
             </div>
             <div>
-                <button className="login-button" type="submit">{ isLoading ? "Loading..." : "Login" }</button>
+                <button className="button" type="submit">{ isLoading ? "Loading..." : "Login" }</button>
             </div>
           </div>
       </form>

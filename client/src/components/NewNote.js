@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
 function NewNote( {onClose, calendarID, date } ) {
     const navigate = useNavigate()
-    const location = useLocation()
     const [errors, setErrors] = useState([])
 
     const year = date[0]
@@ -65,8 +64,8 @@ function NewNote( {onClose, calendarID, date } ) {
                     />
                 </div>
             <div>
-                <button type="submit">Create note</button>
-                <button onClick={()=> onClose()}>cancel</button>
+                <button classsName="button new" type="submit">Create note</button>
+                <button classsName="button delete" onClick={()=> onClose()}>cancel</button>
             </div>
             </form>
         </a>

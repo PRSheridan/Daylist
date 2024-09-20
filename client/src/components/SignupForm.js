@@ -40,7 +40,7 @@ function SignupForm({ onLogin }) {
 
     return (
         <form onSubmit={ formik.handleSubmit }>
-            <div className="header">Signup</div>
+            <div className="header-text">Signup</div>
             <div id="login-container">
             <div>
                 <div className="login">Username</div>
@@ -76,7 +76,7 @@ function SignupForm({ onLogin }) {
                 <a style={{ color: "red" }}> {formik.errors.password}</a>
             </div>
                 <div>
-                    <button className="login-button" type="submit">{ isLoading ? "Loading..." : "Create account" }</button>
+                    <button className="button" type="submit">{ isLoading ? "Loading..." : "Create account" }</button>
                 </div>
             </div>            
         </form>

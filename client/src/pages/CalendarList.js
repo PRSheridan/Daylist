@@ -14,11 +14,10 @@ function CalendarList() {
     }, [showNewCalendar])
     
     return (
-        <>
-            <div className="header">Calendars:</div>
-            <hr className="rounded"></hr>
+        <div id="calendar-list">
+            <div className="header-text">Calendars:</div>
             { showNewCalendar ? <NewCalendar onClose={() => setShowNewCalendar(false)}/> : <></>}
-            <div id="calendar-list"> { calendars.length > 0 ? ( calendars.map((calendar) => (
+            <div> { calendars.length > 0 ? ( calendars.map((calendar) => (
                 <a className="card" 
                     key={calendar.title}  
                     onClick={() => navigate("/Calendar", {state: {calendarID: calendar.id}})}>
@@ -32,7 +31,7 @@ function CalendarList() {
                 </a>
             </div>
 
-        </>
+        </div>
     )
 }
 

@@ -7,11 +7,14 @@ function Login({onLogin}) {
 
     return (
         <>
+            <div className="header">
+                <div className="title in-line">Daylist</div>
+            </div>
             {showLogin ? (
                 <>
                     <LoginForm onLogin={onLogin} />
                     <p className="footer">No account? Create one here
-                    <button className="login-button" onClick={() => setShowLogin(false)}>
+                    <button className="button new" onClick={() => setShowLogin(false)}>
                         Signup
                     </button>
                     </p>
@@ -20,7 +23,7 @@ function Login({onLogin}) {
                 <>
                     <SignupForm onLogin={onLogin} />
                     <p className="footer">Already have an account? Sign in here
-                    <button className="login-button" onClick={() => setShowLogin(true)}>
+                    <button className="button new" onClick={() => setShowLogin(true)}>
                         Login
                     </button>
                     </p>

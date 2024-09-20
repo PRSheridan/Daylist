@@ -15,10 +15,10 @@ function NavBar({ user, setUser }) {
       <NavLink
         to={{pathname: "/CalendarList"}}
         className="nav-link"
-        >Calendar List
+        >CALENDAR LIST
       </NavLink>
-      <a className="nav-link" onClick={handleLogoutClick}>
-        Logout  
+      <a className="nav-link logout" onClick={handleLogoutClick}>
+        LOGOUT  
       </a>
     </nav>
   )

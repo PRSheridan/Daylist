@@ -21,8 +21,14 @@ function App() {
   if (!user) return <Login onLogin={setUser}/>
   return (
     <>
-      <NavBar user={user} setUser={setUser}/>
-      <Outlet />
+      <div className="header">
+        <div className="title in-line">DAYLIST</div>
+        {user ? <div className="username-display in-line">{user.username}</div> : <></>}
+        <NavBar user={user} setUser={setUser}/>
+      </div>
+      <div id="app-container">
+        <Outlet />
+      </div>
     </>
   )
 }

@@ -8,6 +8,7 @@ function NoteView() {
     const calendarID = location.state.calendarID
     const [notes, setNotes] = useState(location.state.filteredNotes)
     const [showNewNote, setShowNewNote] = useState(false)
+    const [showEditNote, setShowEditNote] = useState(false)
     const date = location.state.selectedDate
 
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -22,20 +23,21 @@ function NoteView() {
     
     return (
         <div id="note-container">
-            <button className="nav-button"
+            <button className="nav-button edit"
                     onClick={() => navigate("/calendar", {state: {calendarID}})}>
                     return to calendar view
             </button>
-            <div className="header">Notes:</div>
-            <hr className="rounded"></hr>
             <div className="date">{months[date[1]-1]}, {date[2]}, {date[0]}</div>
 
             {showNewNote ? <NewNote onClose={() => { setShowNewNote(false) }}
-                                    notes={notes} date={date} calendarID={calendarID} /> :
+                                    notes={notes} date={date} calendarID={calendarID} /> : <></> }
+
+            
             <div id="note-list"> { notes.length > 0 ? ( notes.map((note) => (
                 <div key={note.id}>
                     <a className="note-card"> {note.title}
-                        <button className="nav-button">edit note</button>
+                        <button className="nav-button"
+                                onClick={() => setShowEditNote(true)}>edit note</button>
                         <button className="nav-button" 
                                 onClick={() => deleteNote(note.id)}>delete note</button>
                         <p className="note-card-content">{note.content} </p>
@@ -46,7 +48,7 @@ function NoteView() {
                 <a className="note-card new" onClick={() => setShowNewNote(true)}>
                     + New
                 </a>
-            </div>}
+            </div>
         </div>
     )
 }

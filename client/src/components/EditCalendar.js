@@ -42,8 +42,8 @@ function EditForm( {onClose, calendar} ) {
                     />
                 </div>
             <div>
-                <button className="shared-button" type="submit">Change title</button>
-                <button className="shared-button" onClick={()=> onClose()}>cancel</button>
+                <button className="button edit" type="submit">Change title</button>
+                <button className="button delete" onClick={()=> onClose()}>cancel</button>
             </div>
             </form>
         </div>

@@ -43,8 +43,8 @@ function NewCalendar( {onClose} ) {
                     />
                 </div>
             <div>
-                <button type="submit">Create calendar</button>
-                <button onClick={()=> onClose()}>cancel</button>
+                <button className="button new" type="submit">Create calendar</button>
+                <button className="button delete" onClick={()=> onClose()}>cancel</button>
             </div>
             </form>
         </a>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ShareForm from '../components/ShareForm'
-import EditForm from '../components/EditForm'
+import EditForm from '../components/EditCalendar'
 
 function CalendarView() {
     const navigate = useNavigate()
@@ -65,14 +65,13 @@ function CalendarView() {
             <div key="header">
                 <div id="calendar-title" className="in-line">{calendar.title}:</div>
                 <div className="button-container in-line">
-                    <button className="nav-button"
+                    <button className="nav-button new"
                             onClick={() => setShowShareForm(!showShareForm)}>share calendar</button>
-                    <button className="nav-button"
+                    <button className="nav-button edit"
                             onClick={() => setShowEditForm(!showEditForm)}>edit calendar</button>
-                    <button className="nav-button" 
+                    <button className="nav-button delete" 
                             onClick={() => deleteCalendar(calendar.id)}>delete calendar</button>
                 </div>
-                <hr className="rounded"></hr>
                 <div className="date">{months[date[1]-1]}, {date[0]}</div>
                 {showShareForm ? <ShareForm onClose={() => { setShowShareForm(false) }}
                                         calendar={calendar}/> : <></>}
