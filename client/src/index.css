@@ -20,11 +20,9 @@ html, body {
 }
 
 .header-text {
-	margin: 10px;
-	margin-left: 40px;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-weight: 500;
-	color: #cbccc6;
+	color: #3b97eeb9;
 	font-size: 40px;
 }
 
@@ -37,8 +35,6 @@ html, body {
 }
 
 .footer {
-	margin-left: 20px;
-	width: 500px;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 20px;
 }
@@ -51,21 +47,13 @@ html, body {
 }
 
 .fade-in-text {
-	font-family: Arial;
-	font-size: 60px;
-	animation: fadeIn 1s;
+	animation: fadeIn .8s;
   }
   
   @keyframes fadeIn {
 	0% { opacity: 0; }
 	100% { opacity: 1; }
   }
-
-.date {
-	margin:10px;
-	text-align: center;
-	font-size: 30px;
-}
 
 hr.rounded {
   border-top: 6px solid #d66e45b9;
@@ -80,11 +68,6 @@ hr.rounded {
 	border-radius: 10px;
   }
 
-.button-container {
-	width:200px;
-	margin-left: 450px;
-}
-
 .button {
 	display: inline-block;
 	height: 26px;
@@ -94,6 +77,7 @@ hr.rounded {
 	border-color: #d4d4d473;
 	border-radius: 10px;
 	overflow: hidden;
+	color: #fff;
 	text-align: center;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 15px;
@@ -112,6 +96,11 @@ hr.rounded {
     }
 }
 
+.return {
+	margin: 10px;
+	margin-left:32px;
+}
+
 .in-line {
 	display:inline-block;
 }
@@ -119,20 +108,20 @@ hr.rounded {
 /* Login */
 .login {
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 20px;
+	font-size: 15px;
+	margin:6px
 }
 
-#login-container {
-	margin-top: 20px;
-	margin-left: 40px;
+.login-container {
+	padding: 50px;
 }
 
 /* Calendar */
 
 #calendar-list {
+	padding: 40px;
 	width: 800px;
-	margin-left: 20vw;
-	margin-right: 20vw;
+	margin:auto;
 }
 
 #month-container {
@@ -143,14 +132,35 @@ hr.rounded {
 }
 
 #calendar-title {
-	margin-top: 35px;
-	margin-left: 10px;
-	max-width: 440px;
-	max-height: 10px;
+	margin-top: 4px;
 	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 3em;
+	font-size: 36px;
 	position: absolute;
-	top: 2px;
+	top: 0px;
+}
+
+.date {
+	color: #cbccc6;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 28px;
+	text-decoration:underline;
+}
+
+.center {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.calendar-container {
+	margin-top: 50px;
+	display: flex;
+	justify-content: space-between;
+	align-items:baseline
+  }
+
+.button-container {
+	width: 250px;
+	display: flex;
 }
 
 .card {
@@ -194,6 +204,7 @@ hr.rounded {
 	background-color: #3b97eeb9;
 	border-radius: 10px;
 	overflow: hidden;
+	color: #fff;
 	text-align: center;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
@@ -247,8 +258,9 @@ hr.rounded {
 }
 
 /* Notes */
-#note-container {
-	width: 600px;
+
+#note-list {
+	margin-top: 20px;
 }
 
 .note-card {
@@ -340,31 +352,6 @@ hr.rounded {
 	font-weight: 500;
 	color: #3b97eeb9;;
   }
-
-  .nav-button {
-	display: inline-block;
-	height: 23px;
-	margin: 5px;
-	background-color: #f55d5db9;
-	border-radius: 10px;
-	overflow: hidden;
-	text-align: center;
-	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 15px;
-	box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 3px 0 rgba(0,0,0,.12);
-	  transition: all 0.2s;
-  
-	&:hover {
-	  box-shadow: 0 3px 3px 0 rgba(0,0,0,.14),0 7px 5px -2px rgba(0,0,0,.2),0 5px 9px 0 rgba(0,0,0,.12);
-	  top: -2px;
-	  transform: translateY(-2px);
-	  }
-	
-	  &:active {
-		box-shadow: 0 0 0 0 rgba(0,0,0,.14),0 0 0 0  rgba(0,0,0,.2),0 0 0 0  rgba(0,0,0,.12);
-		transform: translateY(2px);
-	  }
-}
 
 .new {
 	background-color: #81d8acb9;

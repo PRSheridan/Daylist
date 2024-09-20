@@ -41,7 +41,6 @@ function SignupForm({ onLogin }) {
     return (
         <form onSubmit={ formik.handleSubmit }>
             <div className="header-text">Signup</div>
-            <div id="login-container">
             <div>
                 <div className="login">Username</div>
                 <input
@@ -77,8 +76,7 @@ function SignupForm({ onLogin }) {
             </div>
                 <div>
                     <button className="button" type="submit">{ isLoading ? "Loading..." : "Create account" }</button>
-                </div>
-            </div>            
+                </div>      
         </form>
     )
 }

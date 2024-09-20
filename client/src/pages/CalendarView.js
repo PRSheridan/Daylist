@@ -63,16 +63,18 @@ function CalendarView() {
         
         days.push(
             <div key="header">
-                <div id="calendar-title" className="header-text in-line">{calendar.title}:</div>
-                <div className="button-container in-line">
-                    <button className="button new"
-                            onClick={() => setShowShareForm(!showShareForm)}>share calendar</button>
-                    <button className="button edit"
-                            onClick={() => setShowEditForm(!showEditForm)}>edit calendar</button>
-                    <button className="button delete" 
-                            onClick={() => deleteCalendar(calendar.id)}>delete calendar</button>
+                <div id="calendar-title" className="header-text">{calendar.title}:</div>
+                <div className="calendar-container fade-in-text">
+                    <div className="date">{months[date[1]-1]}, {date[0]}</div>
+                    <div className="button-container">
+                        <button className="button new"
+                                onClick={() => setShowShareForm(!showShareForm)}>share calendar</button>
+                        <button className="button edit"
+                                onClick={() => setShowEditForm(!showEditForm)}>edit calendar</button>
+                        <button className="button delete" 
+                                onClick={() => deleteCalendar(calendar.id)}>delete calendar</button>
+                    </div>
                 </div>
-                <div className="date">{months[date[1]-1]}, {date[0]}</div>
                 {showShareForm ? <ShareForm onClose={() => { setShowShareForm(false) }}
                                         calendar={calendar}/> : <></>}
                 {showEditForm ? <EditForm onClose={() => { setShowEditForm(false) }}
@@ -84,7 +86,7 @@ function CalendarView() {
             let filteredNotes = notes.filter((note) => note.month === date[1] && note.day === day)
             days.push(
                 <a key={day}
-                    className={`day-card ${isToday(day) ? 'new' : ''}`}
+                    className={`day-card fade-in-text ${isToday(day) ? 'new' : ''}`}
                     onClick={() => daySelect(day, filteredNotes)}> {day}
                     <div className="note-count"> { filteredNotes.length > 0 ?
                      `${filteredNotes.length}` : "" }

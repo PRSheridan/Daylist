@@ -22,12 +22,13 @@ function NoteView() {
     }
     
     return (
-        <div id="note-container">
-            <button className="nav-button edit"
-                    onClick={() => navigate("/calendar", {state: {calendarID}})}>
-                    return to calendar view
-            </button>
-            <div className="date">{months[date[1]-1]}, {date[2]}, {date[0]}</div>
+        <>
+        <button className="button edit return"
+                onClick={() => navigate("/calendar", {state: {calendarID}})}>
+                return to calendar view
+        </button>
+        <div id="month-container">
+            <div className="date center">{months[date[1]-1]} {date[2]}, {date[0]}</div>
 
             {showNewNote ? <NewNote onClose={() => { setShowNewNote(false) }}
                                     notes={notes} date={date} calendarID={calendarID} /> : <></> }
@@ -50,6 +51,7 @@ function NoteView() {
                 </a>
             </div>
         </div>
+        </>
     )
 }
 
