@@ -9,7 +9,14 @@ This project integrates the following features:
 - Secure authenticated logins.
 - Customizable calendars, and easy sharing between users.
 
--gifs here-
+## Login, Add note:
+![DayList-LoginNew-note-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/4c12dc94-e3dd-4137-80e4-93c783b45794)
+
+## New calendar, Sharing:
+![DayList-New-calSharing-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/ab90518c-95b0-421b-b977-3016ddb030a2)
+
+## Edit note, Delete note & calendar, Logout:
+![DayList-Edit-note-date,delete-note,delete-cal](https://github.com/user-attachments/assets/dad6b727-a2fc-43a2-8455-28496c19c5e9)
 
 ## Technologies Used:
 
