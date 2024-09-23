@@ -33,7 +33,7 @@ function SignupForm({ onLogin }) {
                 navigate("/CalendarList")
                 response.json().then((user) => onLogin(user)) 
               } else {
-                response.json().then((err) => setErrors(err.errors));
+                response.json().then((err) => setErrors(err.error));
           }})
         },
       })
@@ -76,6 +76,7 @@ function SignupForm({ onLogin }) {
             </div>
                 <div>
                     <button className="button" type="submit">{ isLoading ? "Loading..." : "Create account" }</button>
+                    {errors.length > 1 ? <div className="alert">{errors}</div> : <></>}
                 </div>      
         </form>
     )

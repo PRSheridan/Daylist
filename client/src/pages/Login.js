@@ -24,9 +24,9 @@ function Login({onLogin}) {
                     <div className="login-container">
                         <SignupForm onLogin={onLogin} />
                         <p className="footer">Already have an account? Sign in here
-                        <button className="button new" onClick={() => setShowLogin(true)}>
-                            Login
-                        </button>
+                            <button className="button new" onClick={() => setShowLogin(true)}>
+                                Login
+                            </button>
                         </p>
                     </div> 
                     </div> )}
