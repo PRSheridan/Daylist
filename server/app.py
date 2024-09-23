@@ -93,6 +93,7 @@ class CalendarIndex(Resource):
             relationship = User_Calendar(
                 user_id = session['user_id'],
                 calendar_id = calendar["id"],
+                permission = 'owner'
             )
 
             db.session.add(relationship)
@@ -126,6 +127,13 @@ class CalendarByID(Resource):
         
     def delete(self, id):
         user_id = session.get('user_id')
+        user_calendar = User_Calendar.query.filter(
+                    User_Calendar.user_id == user_id and
+                    User_Calendar.calendar_id == id).first()
+        
+        if user_calendar.permission != "owner":
+            return make_response({'error': 'User does not have permission to access this resource'}, 403)
+            
         if user_id:
             calendar = Calendar.query.filter(Calendar.id == id).one_or_none()
             if calendar is None:
@@ -137,13 +145,18 @@ class CalendarByID(Resource):
 class UserCalendarByID(Resource):
     def get(self, calendarID):
         shared_user_ids = []
-        shared_usernames = []
+        shared_users = []
         user_calendars = User_Calendar.query.filter(User_Calendar.calendar_id==calendarID).all()
         for relationship in user_calendars:
             shared_user_ids.append(relationship.user_id)
+
         for user_id in shared_user_ids:
-            shared_usernames.append(User.query.filter(User.id == user_id).first().username)
-        return shared_usernames, 200
+            this_username = User.query.filter(User.id == user_id).first().username
+            this_permission = User_Calendar.query.filter(
+                    User_Calendar.user_id == user_id and
+                    User_Calendar.calendar_id == calendarID).first().permission
+            shared_users.append(this_username + ": " + this_permission)
+        return shared_users, 200
     
     def post(self, calendarID):
         data = request.get_json()
@@ -153,7 +166,8 @@ class UserCalendarByID(Resource):
         try:
             user_calendar = User_Calendar(
                 user_id=new_user.id,
-                calendar_id=calendarID
+                calendar_id=calendarID,
+                permission=data['permission']
             )
 
             db.session.add(user_calendar)

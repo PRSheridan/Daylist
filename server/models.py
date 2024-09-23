@@ -50,6 +50,7 @@ class User_Calendar(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'), primary_key=True)
+    permission = db.Column(db.String, nullable=False)
 
     user = db.relationship('User', back_populates='calendars')
     calendar = db.relationship('Calendar', back_populates='users')
