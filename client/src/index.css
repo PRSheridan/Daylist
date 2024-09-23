@@ -102,6 +102,10 @@ hr.rounded {
 	margin-left:32px;
 }
 
+.month-counter {
+	margin-left: 0px;
+	margin-top:15px;
+}
 .in-line {
 	display:inline-block;
 }

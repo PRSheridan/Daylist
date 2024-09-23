@@ -64,6 +64,10 @@ function CalendarView() {
         days.push(
             <div key="header">
                 <div id="calendar-title" className="header-text">{calendar.title}:</div>
+                <button className="button month-counter"
+                        onClick={() => setDate([date[0], date[1]-1, date[2]])}> last month </button>
+                <button className="button month-counter"
+                        onClick={() => setDate([date[0], date[1]+1, date[2]])}> next month </button>
                 <div className="calendar-container fade-in-text">
                     <div className="date">{months[date[1]-1]}, {date[0]}</div>
                     <div className="button-container">
