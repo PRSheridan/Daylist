@@ -70,6 +70,24 @@ function CalendarView() {
         return currentDate.getDay()
     }
 
+    function changeMonth (date, direction) {
+        if (direction == "+"){
+            const newDate = [date[0], date[1] + 1, date[2]]
+            if ( newDate[1] > 12 ) {
+                newDate[1] = 1
+                newDate[0] = newDate[0] + 1
+            }
+            return setDate(newDate)
+        } else {
+            const newDate = [date[0], date[1] - 1, date[2]]
+            if ( newDate[1] < 1 ) {
+                newDate[1] = 12
+                newDate[0] = newDate[0] - 1
+            }
+            return setDate(newDate)
+        }
+    }
+
     function buildMonth (date) {
         const days = []
         
@@ -77,9 +95,9 @@ function CalendarView() {
             <div key="header">
                 <div id="calendar-title" className="header-text">{calendar.title}:</div>
                 <button className="button month-counter"
-                        onClick={() => setDate([date[0], date[1]-1, date[2]])}> last month </button>
+                        onClick={() => changeMonth(date, "-") }> last month </button>
                 <button className="button month-counter"
-                        onClick={() => setDate([date[0], date[1]+1, date[2]])}> next month </button>
+                        onClick={() => changeMonth(date, "+") }> next month </button>
                 <div className="calendar-container fade-in-text">
                     <div className="date">{months[date[1]-1]}, {date[0]}</div>
                     <div className="button-container">
