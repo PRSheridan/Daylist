@@ -65,7 +65,6 @@ function CalendarView() {
     }
 
     function getDayOfWeek (date) {
-        //const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         const currentDate = new Date(`${date[0]}-${date[1]}-1`)
         return currentDate.getDay()
     }
@@ -116,7 +115,7 @@ function CalendarView() {
             </div>
         )
 
-        days.push(<div className="days-of-week">sun mon tue wed thu fri sat</div>)
+        days.push(<div key="daycount" className="days-of-week">sun mon tue wed thu fri sat</div>)
 
         if (firstDayInMonth > 1) {
             for (let day = 1; day <= firstDayInMonth; day++) {
@@ -127,7 +126,8 @@ function CalendarView() {
         }
 
         for (let day = 1; day <= daysInMonth; day++) {
-            let filteredNotes = notes.filter((note) => note.month === date[1] && note.day === day)
+            let filteredNotes = notes.filter(
+                (note) => note.month === date[1] && note.day === day && note.year === date[0])
             days.push(
                 <a key={day}
                     className={`day-card fade-in-text ${isToday(day) ? 'new' : ''}`}
