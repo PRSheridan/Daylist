@@ -10,6 +10,8 @@ function CalendarView() {
     const [calendar, setCalendar] = useState([])
     const [notes, setNotes] = useState([])
     const [date, setDate] = useState([9999, 1, 1])
+    const [daysInMonth, setDaysInMonth] = useState(getDaysInMonth(date))
+    const [firstDayInMonth, setFirstDayInMonth] = useState(getDayOfWeek(date))
     const months = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December']
     const calendarID = location.state.calendarID
@@ -29,25 +31,10 @@ function CalendarView() {
         .then(setNotes)
     }, [showEditForm])
 
-    function daySelect(day, filteredNotes) {
-        const selectedDate = [date[0], date[1], day]
-        navigate("/Notes", {state: {filteredNotes, selectedDate, calendarID}})
-    }
-
-    function isToday(day) {
-        return day === today.getDate() && date[1] === today.getMonth() + 1 && date[0] === today.getFullYear();
-    }
-
-    function formatDate(today) {
-        const day = today.getDate()
-        const month = today.getMonth() + 1
-        const year = today.getFullYear()
-        setDate([year, month, day])
-    }
-
-    function daysInMonth (date) {
-        return new Date(date[1], date[0], 0).getDate();
-    }
+    useEffect(() => {
+        setDaysInMonth(getDaysInMonth(date))
+        setFirstDayInMonth(getDayOfWeek(date))
+    }, [date])
 
     function deleteCalendar(id) {
         fetch(`/calendar/${id}`, {
@@ -57,9 +44,34 @@ function CalendarView() {
         .then( navigate("/CalendarList") )
     }
 
+    function formatDate(today) {
+        const day = today.getDate()
+        const month = today.getMonth() + 1
+        const year = today.getFullYear()
+        setDate([year, month, day])
+    }
+
+    function daySelect(day, filteredNotes) {
+        const selectedDate = [date[0], date[1], day]
+        navigate("/Notes", {state: {filteredNotes, selectedDate, calendarID}})
+    }
+
+    function isToday(day) {
+        return day === today.getDate() && date[1] === today.getMonth() + 1 && date[0] === today.getFullYear();
+    }
+
+    function getDaysInMonth (date) {
+        return new Date(date[0], date[1], 0).getDate();
+    }
+
+    function getDayOfWeek (date) {
+        //const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        const currentDate = new Date(`${date[0]}-${date[1]}-1`)
+        return currentDate.getDay()
+    }
+
     function buildMonth (date) {
         const days = []
-        const totalDays = daysInMonth(date)
         
         days.push(
             <div key="header">
@@ -86,7 +98,17 @@ function CalendarView() {
             </div>
         )
 
-        for (let day = 1; day <= totalDays; day++) {
+        days.push(<div className="days-of-week">sun mon tue wed thu fri sat</div>)
+
+        if (firstDayInMonth > 1) {
+            for (let day = 1; day <= firstDayInMonth; day++) {
+                days.push(
+                    <a key={day + `filler`} className={`day-card placeholder fade-in-text`}>test</a>
+                )
+            }
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
             let filteredNotes = notes.filter((note) => note.month === date[1] && note.day === day)
             days.push(
                 <a key={day}

@@ -243,9 +243,12 @@ api.add_resource(CheckSession, '/check_session')
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
+
 api.add_resource(CalendarIndex, '/calendars')
 api.add_resource(CalendarByID, '/calendar/<int:id>')
+
 api.add_resource(UserCalendarByID, '/share/<int:calendarID>')
+
 api.add_resource(NoteByCalendarID, '/calendar_notes/<int:calendarID>')
 api.add_resource(NoteByID, '/note/<int:noteID>')
 

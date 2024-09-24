@@ -248,6 +248,20 @@ hr.rounded {
   }
 }
 
+.placeholder {
+	visibility: hidden;
+}
+
+.days-of-week {
+	margin-top: 10px;
+	color: #e0e0df;
+	font-weight: 500;
+	margin-right: 15px;
+	text-align: center;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	word-spacing: 55px;
+}
+
 #new-calendar-container {
 	width: 400px;
 	height: 400px;
