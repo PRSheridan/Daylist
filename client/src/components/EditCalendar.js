@@ -4,7 +4,7 @@ import * as yup from "yup"
 
 function EditForm( {onClose, calendar} ) {
     const formSchema = yup.object().shape({
-        title: yup.string().required("Must enter a new title"),
+        title: yup.string().required("Note must have a title").max(24, "Title must be less than 24 characters"),
     });
 
     const formik = useFormik({
@@ -23,7 +23,8 @@ function EditForm( {onClose, calendar} ) {
         <div id="share-container">
             <form className="edit-form" onSubmit={ formik.handleSubmit }>
                 <div>
-                    <div>Enter a new title:</div>
+                    <div className="form-field">Enter a new title:</div>
+                    <div className="error">{formik.errors.title}</div>
                     <input
                     type="text"
                     id="title"

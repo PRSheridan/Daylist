@@ -6,7 +6,7 @@ function NewCalendar( {onClose} ) {
     const [errors, setErrors] = useState([])
 
     const formSchema = yup.object().shape({
-        title: yup.string().required("Must enter a title").max(24),
+        title: yup.string().required("Note must have a title").max(24, "Title must be less than 24 characters"),
     })
 
     const formik = useFormik({
@@ -29,6 +29,7 @@ function NewCalendar( {onClose} ) {
             <div>New Calendar:</div>
             <form onSubmit={ formik.handleSubmit }>
                 <div className="form-field">Enter calendar title:</div>
+                <div className="error">{formik.errors.title}</div>
                 <input
                 type="text"
                 id="title"

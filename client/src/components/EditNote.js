@@ -7,10 +7,10 @@ function EditNote( {onClose, note, calendarID} ) {
     const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
-        year: yup.string().required("Must enter a year"),
-        month: yup.string().required("Must enter a month"),
-        day: yup.string().required("Must enter a day"),
-        title: yup.string().required("Note must have a title"),
+        year: yup.string().required("Year required.").max(4, "Must be a year (yyyy)."),
+        month: yup.string().required("Must enter a month").max(2, "Must be a month (mm)."),
+        day: yup.string().required("Must enter a day").max(2, "Must be a day (dd)."),
+        title: yup.string().required("Note must have a title").max(24, "Title must be less than 24 characters"),
         content: yup.string().required("Note must contain content."),
     });
 
@@ -39,6 +39,7 @@ function EditNote( {onClose, note, calendarID} ) {
             <form onSubmit={ formik.handleSubmit }>
                 <div>
                     <div className="form-field">Enter note year:</div>
+                    <div className="error">{formik.errors.year}</div>
                     <input
                         type="text"
                         id="year"
@@ -49,6 +50,7 @@ function EditNote( {onClose, note, calendarID} ) {
                 </div>
                 <div>
                     <div className="form-field">Enter note month:</div>
+                    <div className="error">{formik.errors.month}</div>
                     <input
                         type="text"
                         id="month"
@@ -59,6 +61,7 @@ function EditNote( {onClose, note, calendarID} ) {
                 </div>
                 <div>
                     <div className="form-field">Enter note day:</div>
+                    <div className="error">{formik.errors.day}</div>
                     <input
                         type="text"
                         id="day"
@@ -69,6 +72,7 @@ function EditNote( {onClose, note, calendarID} ) {
                 </div>
                 <div>
                     <div className="form-field">Enter note title:</div>
+                    <div className="error">{formik.errors.title}</div>
                     <input
                         type="text"
                         id="title"
@@ -79,6 +83,7 @@ function EditNote( {onClose, note, calendarID} ) {
                 </div>
                 <div>
                     <div className="form-field">Enter note content:</div>
+                    <div className="error">{formik.errors.content}</div>
                     <textarea   
                         type="text"
                         id="content"

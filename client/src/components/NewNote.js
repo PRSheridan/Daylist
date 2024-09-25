@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useFormik, ErrorMessage} from "formik"
+import { useFormik } from "formik"
 import * as yup from "yup"
 
 function NewNote( {onClose, calendarID, date } ) {
     const navigate = useNavigate()
-    const [errors, setErrors] = useState([])
 
     const year = date[0]
     const month = date[1]
     const day = date [2]
 
     const formSchema = yup.object().shape({
-        title: yup.string().required("Note must have a title").max(24),
+        title: yup.string().required("Note must have a title").max(24, "Title must be less than 24 characters"),
         content: yup.string().required("Note must have content"),
       });
 
@@ -32,7 +31,6 @@ function NewNote( {onClose, calendarID, date } ) {
             body: JSON.stringify(values, null, 1),
             }).then((response) => {
                 if (response.ok) { navigate(`/calendar/`, {state: {calendarID}}) }
-                else { response.json().then((err) => setErrors(err.errors)) }
             })
         },
     })
@@ -43,6 +41,7 @@ function NewNote( {onClose, calendarID, date } ) {
             <form onSubmit={ formik.handleSubmit }>
                 <div>
                     <div className="form-field">Enter note title:</div>
+                    <div className="error">{formik.errors.title}</div>
                     <input
                         type="text"
                         id="title"
@@ -53,6 +52,7 @@ function NewNote( {onClose, calendarID, date } ) {
                 </div>
                 <div>
                     <div className="form-field">Enter note content:</div>
+                    <div className="error">{formik.errors.content}</div>
                     <textarea   
                         type="text"
                         id="content"
@@ -64,8 +64,6 @@ function NewNote( {onClose, calendarID, date } ) {
             <div>
                 <button className="button new" type="submit">Create note</button>
                 <button className="button delete" onClick={()=> onClose()}>cancel</button>
-                <ErrorMessage name="name" />
-                {errors.length > 1 ? <div className="alert">{errors}</div> : <></>}
             </div>
             </form>
         </div>
