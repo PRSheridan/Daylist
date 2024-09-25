@@ -43,7 +43,7 @@ class Calendar(db.Model, SerializerMixin):
     title = db.Column(db.String(24), nullable=False)
 
     notes = db.relationship('Note', backref='calendar', cascade='all, delete-orphan')
-    user_calendars = db.relationship('User_Calendar', back_populates='calendar')
+    user_calendars = db.relationship('User_Calendar', back_populates='calendar', cascade='all, delete-orphan')
 
     users = association_proxy('user_calendars', 'user',
                               creator=lambda user_obj: User_Calendar(user=user_obj))

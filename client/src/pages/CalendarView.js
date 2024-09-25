@@ -19,7 +19,8 @@ function CalendarView() {
 
     const [showShareForm, setShowShareForm] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
-    
+
+//on load: formatDate, get calendar, get notes
     useEffect(() => {
         formatDate(today)
         fetch(`/calendar/${calendarID}`)
@@ -31,6 +32,7 @@ function CalendarView() {
         .then(setNotes)
     }, [showEditForm])
 
+//on change month: get month information
     useEffect(() => {
         setDaysInMonth(getDaysInMonth(date))
         setFirstDayInMonth(getDayOfWeek(date))
@@ -42,6 +44,7 @@ function CalendarView() {
             headers: { 'Content-Type':'application/json' }
         }).then( navigate("/CalendarList" ))}
 
+//format date to readable
     function formatDate(today) {
         const day = today.getDate()
         const month = today.getMonth() + 1
@@ -85,6 +88,7 @@ function CalendarView() {
         }
     }
 
+//create the headers, buttons, placeholders, day-cards, and notes for the calendar view
     function buildMonth (date) {
         const days = []
         

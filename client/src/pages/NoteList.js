@@ -19,8 +19,7 @@ function NoteView() {
         fetch(`/note/${noteID}`, {
             method: 'DELETE',
             headers: { 'Content-Type':'application/json' }
-        })
-        .then(() => setNotes(notes.filter((note) => note.id !== noteID)))
+        }).then(() => setNotes(notes.filter((note) => note.id !== noteID)))
     }
 
     function editNote(note) {
@@ -30,41 +29,41 @@ function NoteView() {
     
     return (
         <>
-        <button className="button edit return"
-                onClick={() => navigate("/calendar", {state: {calendarID}})}>
-                return to calendar view
-        </button>
-        <div id="notes-container">
-            <div className="date center">{months[date[1]-1]} {date[2]}, {date[0]}</div>
+            <button className="button edit return"
+                    onClick={() => navigate("/calendar", {state: {calendarID}})}>
+                    return to calendar view
+            </button>
+            <div id="notes-container">
+                <div className="date center">{months[date[1]-1]} {date[2]}, {date[0]}</div>
 
-            {showNewNote ? <NewNote onClose={() => { setShowNewNote(false) }}
-                                    notes={notes} date={date} calendarID={calendarID} /> : <></> }
+                {showNewNote ? <NewNote onClose={() => { setShowNewNote(false) }}
+                                        notes={notes} date={date} calendarID={calendarID} /> : <></> }
 
-            {showEditNote ? <EditNote onClose={() => { setShowEditNote(false) }}
-                                        note={currentNote} calendarID={calendarID} /> : <></>}
-            
-            <div id="note-list"> { notes.length > 0 ? ( notes.map((note) => (
-                <div key={note.id}>
-                    <div className="note-card">
-                        <div className="note-header">
-                            <div className="note-title">{note.title}</div>
-                            <div className="note-buttons">
-                                <button className="button edit"
-                                        onClick={() => editNote(note)}>edit note</button>
-                                <button className="button delete" 
-                                        onClick={() => deleteNote(note.id)}>delete note</button>
+                {showEditNote ? <EditNote onClose={() => { setShowEditNote(false) }}
+                                            note={currentNote} calendarID={calendarID} /> : <></>}
+                
+                <div id="note-list"> { notes.length > 0 ? ( notes.map((note) => (
+                    <div key={note.id}>
+                        <div className="note-card">
+                            <div className="note-header">
+                                <div className="note-title">{note.title}</div>
+                                <div className="note-buttons">
+                                    <button className="button edit"
+                                            onClick={() => editNote(note)}>edit note</button>
+                                    <button className="button delete" 
+                                            onClick={() => deleteNote(note.id)}>delete note</button>
+                                </div>
                             </div>
+                            <p className="note-card-content">{note.content} </p>
                         </div>
-                        <p className="note-card-content">{note.content} </p>
+                    </div>
+                    ))) : (
+                    <div className="alert"> No notes found </div> )}
+                    <div className="note-card new" onClick={() => setShowNewNote(true)}>
+                        <div className="new-note-card"> + new note </div>
                     </div>
                 </div>
-                ))) : (
-                <div className="alert"> No notes found </div> )}
-                <div className="note-card new" onClick={() => setShowNewNote(true)}>
-                    <div className="new-note-card"> + new note </div>
-                </div>
             </div>
-        </div>
         </>
     )
 }
