@@ -6,15 +6,14 @@ function CalendarList() {
     const navigate = useNavigate()
     const [calendars, setCalendars] = useState([])
     const [showNewCalendar, setShowNewCalendar] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        setIsLoading(true);
         fetch("/calendars")
         .then((response) => response.json())
         .then((data) => {
-            setIsLoading(false)
             setCalendars(data)
+            setIsLoading(false)
         })
     }, [showNewCalendar])
     

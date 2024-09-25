@@ -12,10 +12,10 @@ function CalendarView() {
     const [date, setDate] = useState([9999, 1, 1])
     const [daysInMonth, setDaysInMonth] = useState(getDaysInMonth(date))
     const [firstDayInMonth, setFirstDayInMonth] = useState(getDayOfWeek(date))
-    const months = ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December']
     const calendarID = location.state.calendarID
     const today = new Date()
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December']
 
     const [showShareForm, setShowShareForm] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
@@ -40,9 +40,7 @@ function CalendarView() {
         fetch(`/calendar/${id}`, {
             method: 'DELETE',
             headers: { 'Content-Type':'application/json' }
-        })
-        .then( navigate("/CalendarList") )
-    }
+        }).then( navigate("/CalendarList" ))}
 
     function formatDate(today) {
         const day = today.getDate()

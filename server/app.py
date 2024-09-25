@@ -68,10 +68,9 @@ class CalendarIndex(Resource):
     def get(self):
         user_id = session.get('user_id')
         if user_id:
-            user_calendars = User_Calendar.query.filter_by(user_id=user_id).all()
-            calendar_ids = [cal.calendar_id for cal in user_calendars]
-            calendars = Calendar.query.filter(Calendar.id.in_(calendar_ids)).all()
-            calendar_list = [{'id': calendar.id, 'title': calendar.title} for calendar in calendars]
+            user = User.query.filter(User.id == user_id).first()
+            calendars = user.calendars
+            calendar_list = [{'id': calendar.id, 'title': calendar.title} for calendar in calendars if calendar is not None]
             return calendar_list, 200
 
         return {'error': '401 Unauthorized request'}, 401
@@ -83,18 +82,15 @@ class CalendarIndex(Resource):
 
         try:
             calendar = Calendar(title = title)
-
             db.session.add(calendar)
             db.session.commit()
 
             calendar = Calendar.query.filter(Calendar.title == title).first().to_dict()
-
             relationship = User_Calendar(
                 user_id = session['user_id'],
                 calendar_id = calendar["id"],
                 permission = 'owner'
             )
-
             db.session.add(relationship)
             db.session.commit()
 
@@ -133,28 +129,20 @@ class CalendarByID(Resource):
         if user_calendar.permission != "owner":
             return make_response({'error': 'User does not have permission to access this resource'}, 403)
             
-        if user_id:
-            calendar = Calendar.query.filter(Calendar.id == id).one_or_none()
-            if calendar is None:
-                return make_response({'error': 'Calendar not found'}, 404)
+        if user_id and (calendar := Calendar.query.filter(Calendar.id == id).one_or_none()):
             db.session.delete(calendar)
             db.session.commit()
             return make_response({}, 204)
+        else:
+            return make_response({'error': 'Calendar not found'}, 404)
         
 class UserCalendarByID(Resource):
     def get(self, calendarID):
-        shared_user_ids = []
-        shared_users = []
-        user_calendars = User_Calendar.query.filter(User_Calendar.calendar_id==calendarID).all()
-        for relationship in user_calendars:
-            shared_user_ids.append(relationship.user_id)
-
-        for user_id in shared_user_ids:
-            this_username = User.query.filter(User.id == user_id).first().username
-            this_permission = User_Calendar.query.filter(
-                    User_Calendar.user_id == user_id and
-                    User_Calendar.calendar_id == calendarID).first().permission
-            shared_users.append(this_username + ": " + this_permission)
+        calendar = Calendar.query.filter(Calendar.id == calendarID).first()
+        shared_users = [user.username +": " + User_Calendar.query.filter(
+                            User_Calendar.user_id == user.id and
+                            User_Calendar.calendar_id == calendarID).first().permission
+                        for user in calendar.users]
         return shared_users, 200
     
     def post(self, calendarID):

@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
 function EditForm( {onClose, calendar} ) {
-    const [errors, setErrors] = useState([])
-
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a new title"),
     });
@@ -15,16 +13,9 @@ function EditForm( {onClose, calendar} ) {
         onSubmit: (values) => {
             fetch(`/calendar/${calendar.id}`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values, null, 1),
-            }).then(
-            (response) => {
-                if (response.ok) { onClose() }
-                else { response.json().then((err) => setErrors(err.errors)) }
-            }
-            )
+            }).then((response) => {if(response.ok){ onClose() }})
         },
     })
 

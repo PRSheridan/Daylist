@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik"
+import { useFormik, ErrorMessage} from "formik"
 import * as yup from "yup"
 
 function NewNote( {onClose, calendarID, date } ) {
@@ -28,9 +28,7 @@ function NewNote( {onClose, calendarID, date } ) {
         onSubmit: (values) => {
             fetch(`/calendar_notes/${calendarID}`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values, null, 1),
             }).then((response) => {
                 if (response.ok) { navigate(`/calendar/`, {state: {calendarID}}) }
@@ -66,6 +64,8 @@ function NewNote( {onClose, calendarID, date } ) {
             <div>
                 <button className="button new" type="submit">Create note</button>
                 <button className="button delete" onClick={()=> onClose()}>cancel</button>
+                <ErrorMessage name="name" />
+                {errors.length > 1 ? <div className="alert">{errors}</div> : <></>}
             </div>
             </form>
         </div>

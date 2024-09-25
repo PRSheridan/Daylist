@@ -4,11 +4,9 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 
 function LoginForm({ onLogin }) {
-
   const navigate = useNavigate()
   const [errors, setErrors] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
   const formSchema = yup.object().shape({
     username: yup.string().required("Must enter username"),
     password: yup.string().required("Must enter a password"),
@@ -21,20 +19,15 @@ function LoginForm({ onLogin }) {
       setIsLoading(true);
       fetch("/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values, null, 2),
-      }).then(
-        (response) => {
-          setIsLoading(false);
-          if (response.ok) { 
-            navigate("/CalendarList")
-            response.json().then((user) => onLogin(user)) 
-          } else {
-            response.json().then((err) => {
-              setErrors(err.error)});
-      }})
+      }).then((response) => { setIsLoading(false);
+        if (response.ok) { navigate("/CalendarList")
+          response.json().then((user) => onLogin(user)) 
+        } else {
+          response.json().then((err) => { setErrors(err.error)})
+        }
+      })
     },
   })
 

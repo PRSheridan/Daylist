@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
-        return f'<User {self.username}>'
+        return f'<User {self.id, self.username}>'
 
 
 class Calendar(db.Model, SerializerMixin):
@@ -40,7 +40,7 @@ class Calendar(db.Model, SerializerMixin):
     serialize_rules = ('-user_calendars.calendar',)
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
+    title = db.Column(db.String(24), nullable=False)
 
     notes = db.relationship('Note', backref='calendar', cascade='all, delete-orphan')
     user_calendars = db.relationship('User_Calendar', back_populates='calendar')

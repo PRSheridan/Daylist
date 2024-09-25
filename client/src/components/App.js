@@ -7,8 +7,10 @@ function App() {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
 
+//check if there is a user session in cookies
+//assign user, and redirect to /CalendarList
   useEffect(() => {
-    document.title = 'Day Tracker'
+    document.title = 'DayList'
     fetch("/check_session")
     .then((response) => {
       if (response.ok) {

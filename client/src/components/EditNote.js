@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import {useNavigate } from "react-router-dom";
 import { useFormik } from "formik"
 import * as yup from "yup"
 
 function EditNote( {onClose, note, calendarID} ) {
-    const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
     const formSchema = yup.object().shape({
@@ -27,13 +26,10 @@ function EditNote( {onClose, note, calendarID} ) {
         onSubmit: (values) => {
             fetch(`/note/${note.id}`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values, null, 1),
             }).then((response) => {
                 if (response.ok) {navigate("/calendar", {state: {calendarID}})}
-                else { response.json().then((err) => setErrors(err.errors)) }
             })
         },
     })
