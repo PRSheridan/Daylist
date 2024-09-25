@@ -51,12 +51,11 @@ class Login(Resource):
         password = json.get('password')
         user = User.query.filter(User.username == username).first()
 
-        if user:
-            if user.authenticate(password):
-                session['user_id'] = user.id
-                return make_response(user.to_dict(), 200)
-            
-        return {'error':'401 Unauthorized login'}, 401
+        if user and user.authenticate(password):
+            session['user_id'] = user.id
+            return make_response(user.to_dict(), 200)
+        
+        return {'error': '401 Unauthorized login'}, 401
 
 class Logout(Resource):
     def delete(self):
