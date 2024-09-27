@@ -42,7 +42,11 @@ function CalendarView() {
         fetch(`/calendar/${id}`, {
             method: 'DELETE',
             headers: { 'Content-Type':'application/json' }
-        }).then( navigate("/CalendarList" ))}
+        }).then((response) => {
+            if (response.ok) { navigate("/CalendarList" )}
+        })
+    }
+
 
 //format date to readable
     function formatDate(today) {

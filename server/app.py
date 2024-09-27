@@ -20,6 +20,7 @@ class CheckSession(Resource):
             return user, 200
         return {'error': '401 Unauthorized Request'}, 401
 
+#SIGNUP
 #receive username, password, confirmation: 
 #   if passwords do not match throw error
 #   try creating a new User, hash password, commit changes 
@@ -45,6 +46,7 @@ class Signup(Resource):
         except IntegrityError:
             return {'error': '422 Cannot process request'}, 422
 
+#LOGIN
 #receive username, password
 #   if the username exists, and authenticated password matches
 class Login(Resource):
@@ -60,6 +62,7 @@ class Login(Resource):
         
         return {'error': '401 Unauthorized login'}, 401
 
+#LOGOUT
 #clear session['user_id']
 class Logout(Resource):
     def delete(self):
@@ -71,6 +74,7 @@ class Logout(Resource):
 
 class CalendarIndex(Resource):
 
+#READ ALL CALENDARS
 #if there is a current user, get user
 #   add calendar_list object for each calendar in the users calendars
 #   *uses association object for user.calendars
@@ -83,6 +87,7 @@ class CalendarIndex(Resource):
 
         return {'error': '401 Unauthorized request'}, 401
 
+#CREATE CALENDAR
 #if there is a current user, get data
 #   try creating a new Calendar and commit changes
 #   if the calendar is created, try creating a new relationship as owner and commit changes
@@ -116,6 +121,7 @@ class CalendarIndex(Resource):
 
 class CalendarByID(Resource):
 
+#READ CALENDAR
 #if calendar id exists, return calendar
     def get(self, id):
         if session['user_id']:
@@ -125,10 +131,17 @@ class CalendarByID(Resource):
             return make_response(calendar.to_dict(), 200)
 
 #UPDATE CALENDAR
-#if current user, get data and current-calendar by id
+#if current user has permission, get data and current-calendar by id
 #   try updating existing calendar, commit changes
     def post(self, id):
-        if session['user_id']:
+        if user_id := session['user_id']:
+            calendar_relationship = Calendar_Relationship.query.filter(
+                        Calendar_Relationship.user_id == user_id and
+                        Calendar_Relationship.calendar_id == id).first()
+            
+            if calendar_relationship.permission != "owner":
+                        return make_response({'error': 'User does not have permission to access this resource'}, 403)
+
             data = request.get_json()
             calendar = Calendar.query.filter(Calendar.id == id).one_or_none()
 
@@ -140,7 +153,8 @@ class CalendarByID(Resource):
         except IntegrityError:
             return {'error':'422 cannot process request'}, 422
         
-#if current user, get current-relationship
+#DELETE CALENDAR
+#if current user has permission
 #   if user is an owner, delete the current-calendar
     def delete(self, id):
         if user_id := session['user_id']:
@@ -161,6 +175,7 @@ class CalendarByID(Resource):
 
 class CalendarRelationshipByID(Resource):
 
+#READ CALENDAR RELATIONSHIP
 #if calendar exists
 #   for calendar.users, find username and relationship permission level
 #   add to shared_users Object
@@ -174,10 +189,18 @@ class CalendarRelationshipByID(Resource):
                 
         return shared_users, 200
 
-#if current user, get data and find other user (to share with)
+#CREATE CALENDAR RELATIONSHIP
+#if current user has permission, get data and find other user (to share with)
 #   try creating a new relationship, commit changes
     def post(self, calendarID):
-        if session['user_id']:
+        if user_id := session['user_id']:
+            calendar_relationship = Calendar_Relationship.query.filter(
+                        Calendar_Relationship.user_id == user_id and
+                        Calendar_Relationship.calendar_id == calendarID).first()
+    
+            if calendar_relationship.permission != "owner":
+                return make_response({'error': 'User does not have permission to access this resource'}, 403)
+                
             data = request.get_json()
             new_user = User.query.filter(User.username == data['username']).one_or_none()
 
@@ -201,6 +224,7 @@ class CalendarRelationshipByID(Resource):
         
 class NoteByCalendarID(Resource):
 
+#READ NOTES
 #if current user, get note for current-calendar
     #return note_list of formatted note objects
     def get(self, calendarID):
@@ -211,10 +235,18 @@ class NoteByCalendarID(Resource):
                       'title': note.title, 'content': note.content} for note in notes]
         return note_list, 200
 
-#if current user, get data (format data)
+#CREATE NOT E
+#if current user has permission, get data (format data)
 #   try creating new Note, commit changes
     def post(self, calendarID):
-        if session['user_id']:
+        if user_id := session['user_id']:
+            calendar_relationship = Calendar_Relationship.query.filter(
+                        Calendar_Relationship.user_id == user_id and
+                        Calendar_Relationship.calendar_id == calendarID).first()
+        
+            if calendar_relationship.permission != "owner":
+                return make_response({'error': 'User does not have permission to access this resource'}, 403)
+            
             data = request.get_json()
             year = data['year']
             month = data['month']
@@ -222,60 +254,74 @@ class NoteByCalendarID(Resource):
             title = data['title']
             content = data['content']
 
-        try:
-            note = Note(
-                year=year,
-                month=month,
-                day=day,
-                title=title,
-                content=content,
-                calendar_id=calendarID
-            )
+            try:
+                note = Note(
+                    year=year,
+                    month=month,
+                    day=day,
+                    title=title,
+                    content=content,
+                    calendar_id=calendarID
+                )
 
-            db.session.add(note)
-            db.session.commit()
-            return note.to_dict(), 200
-        
-        except IntegrityError:
-            return {'error':'422 cannot process request'}, 422
+                db.session.add(note)
+                db.session.commit()
+                return note.to_dict(), 200
+            
+            except IntegrityError:
+                return {'error':'422 cannot process request'}, 422
 
 
 class NoteByID(Resource):
 
 #UPDATE NOT E
-#if note exists and current user, get data
+#if note exists and current user has permission, get data
 #   try updating the existing note with new data, commit changes
     def post(self, noteID):
-        if session['user_id']:
+        if user_id := session['user_id']:
             if currentNote := Note.query.filter(Note.id == noteID).one_or_none():
                 if currentNote is None:
                     return make_response({'error': 'Note not found'}, 404)
-                data = request.get_json()
-
-        try:
-            currentNote.year = data['year']
-            currentNote.month = data['month']
-            currentNote.day = data['day']
-            currentNote.title = data['title']
-            currentNote.content = data['content']
-
-            db.session.add(currentNote)
-            db.session.commit()
-
-            return currentNote.to_dict(), 200
+                
+            calendar_relationship = Calendar_Relationship.query.filter(
+                        Calendar_Relationship.user_id == user_id and
+                        Calendar_Relationship.calendar_id == currentNote.calendar_id).first()
         
-        except IntegrityError:
-            return {'error':'422 cannot process request'}, 422
-        
-# if note exists and current user
+            if calendar_relationship.permission != "owner":
+                return make_response({'error': 'User does not have permission to access this resource'}, 403)
+
+            data = request.get_json()
+
+            try:
+                currentNote.year = data['year']
+                currentNote.month = data['month']
+                currentNote.day = data['day']
+                currentNote.title = data['title']
+                currentNote.content = data['content']
+                db.session.commit()
+
+                return currentNote.to_dict(), 200
+            
+            except IntegrityError:
+                return {'error':'422 cannot process request'}, 422
+
+#DELETE NOT E
+# if note exists and current user has permission
 #   delete note
     def delete(self, noteID):
-        if session['user_id']:
-            if note := Note.query.filter(Note.id == noteID).one_or_none():
-                if note is None:
+        if user_id := session['user_id']:
+            if currentNote := Note.query.filter(Note.id == noteID).one_or_none():
+                if currentNote is None:
                     return make_response({'error': 'Note not found'}, 404)
+                
+            calendar_relationship = Calendar_Relationship.query.filter(
+                        Calendar_Relationship.user_id == user_id and
+                        Calendar_Relationship.calendar_id == currentNote.calendar_id).first()
+        
+            if calendar_relationship.permission != "owner":
+                return make_response({'error': 'User does not have permission to access this resource'}, 403)
             
-        db.session.delete(note)
+        db.session.delete(currentNote)
         db.session.commit()
         return make_response({}, 204)
         

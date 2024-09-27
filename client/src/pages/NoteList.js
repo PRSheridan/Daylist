@@ -19,7 +19,9 @@ function NoteView() {
         fetch(`/note/${noteID}`, {
             method: 'DELETE',
             headers: { 'Content-Type':'application/json' }
-        }).then(() => setNotes(notes.filter((note) => note.id !== noteID)))
+        }).then((response) => {
+            if (response.ok) { setNotes(notes.filter((note) => note.id !== noteID))}
+        })
     }
 
     function editNote(note) {
