@@ -6,16 +6,16 @@ from config import db, bcrypt
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
-    serialize_rules = ('-user_calendars.user',)
+    serialize_rules = ('-calendar_relationships.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String)
 
-    user_calendars = db.relationship('User_Calendar', back_populates='user')
+    calendar_relationships = db.relationship('Calendar_Relationship', back_populates='user')
 
-    calendars = association_proxy('user_calendars', 'calendar',
-                                  creator=lambda calendar_obj: User_Calendar(calendar=calendar_obj))
+    calendars = association_proxy('calendar_relationships', 'calendar',
+                                  creator=lambda calendar_obj: Calendar_Relationship(calendar=calendar_obj))
 
     @hybrid_property
     def password_hash(self):
@@ -37,24 +37,24 @@ class User(db.Model, SerializerMixin):
 
 class Calendar(db.Model, SerializerMixin):
     __tablename__ = 'calendars'
-    serialize_rules = ('-user_calendars.calendar',)
+    serialize_rules = ('-calendar_relationships.calendar',)
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(24), nullable=False)
 
     notes = db.relationship('Note', backref='calendar', cascade='all, delete-orphan')
-    user_calendars = db.relationship('User_Calendar', back_populates='calendar', cascade='all, delete-orphan')
+    calendar_relationships = db.relationship('Calendar_Relationship', back_populates='calendar', cascade='all, delete-orphan')
 
-    users = association_proxy('user_calendars', 'user',
-                              creator=lambda user_obj: User_Calendar(user=user_obj))
+    users = association_proxy('calendar_relationships', 'user',
+                              creator=lambda user_obj: Calendar_Relationship(user=user_obj))
 
     def __repr__(self):
         return f'<Calendar {self.title}>'
 
 
-class User_Calendar(db.Model, SerializerMixin):
-    __tablename__ = 'user_calendars'
-    serialize_rules = ('-user.user_calendars', '-calendar.user_calendars')
+class Calendar_Relationship(db.Model, SerializerMixin):
+    __tablename__ = 'calendar_relationships'
+    serialize_rules = ('-user.calendar_relationships', '-calendar.calendar_relationships')
 
     id = db.Column(db.Integer, primary_key=True)
     permission = db.Column(db.String, nullable=False)
@@ -62,11 +62,11 @@ class User_Calendar(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'))
 
-    user = db.relationship('User', back_populates='user_calendars')
-    calendar = db.relationship('Calendar', back_populates='user_calendars')
+    user = db.relationship('User', back_populates='calendar_relationships')
+    calendar = db.relationship('Calendar', back_populates='calendar_relationships')
 
     def __repr__(self):
-        return f'<User_Calendar {self.calendar_id, self.user_id, self.permission}>'
+        return f'<Calendar_Relationship {self.calendar_id, self.user_id, self.permission}>'
 
 
 class Note(db.Model, SerializerMixin):
