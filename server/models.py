@@ -1,4 +1,5 @@
 from sqlalchemy_serializer import SerializerMixin
+from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.associationproxy import association_proxy
 
@@ -82,6 +83,13 @@ class Note(db.Model, SerializerMixin):
     content = db.Column(db.String)
 
     calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'), nullable=False)
+
+#not used just for example
+    @validates('title')
+    def validate_title(self, key, title):
+        if len(title) > 24:
+            raise ValueError("title too long")
+        return title
 
     def __repr__(self):
         return f'<Note {self.title, self.year, self.month, self.day}>'
