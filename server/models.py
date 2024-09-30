@@ -43,7 +43,7 @@ class Calendar(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(24), nullable=False)
 
-    notes = db.relationship('Note', backref='calendar', cascade='all, delete-orphan')
+    notes = db.relationship('Note', back_populates="calendar", cascade='all, delete-orphan')
     calendar_relationships = db.relationship('Calendar_Relationship', back_populates='calendar', cascade='all, delete-orphan')
 
     users = association_proxy('calendar_relationships', 'user',
@@ -83,6 +83,7 @@ class Note(db.Model, SerializerMixin):
     content = db.Column(db.String)
 
     calendar_id = db.Column(db.Integer, db.ForeignKey('calendars.id'), nullable=False)
+    calendar = db.relationship('Calendar', back_populates="notes")
 
 #not used just for example
     @validates('title')

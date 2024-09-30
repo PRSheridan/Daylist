@@ -12,6 +12,16 @@ from models import User, Calendar, Calendar_Relationship, Note
 def index():
     return ''
 
+
+#frequent check for edit permissions
+def check_permission(user_id, calendar_id):
+    calendar_relationship = Calendar_Relationship.query.filter(
+                        Calendar_Relationship.user_id == user_id and
+                        Calendar_Relationship.calendar_id == calendar_id).first()
+    
+    return calendar_relationship.permission         
+
+
 #check if there is a user_id for the current session
 class CheckSession(Resource):
     def get(self):
@@ -135,12 +145,8 @@ class CalendarByID(Resource):
 #   try updating existing calendar, commit changes
     def post(self, id):
         if user_id := session['user_id']:
-            calendar_relationship = Calendar_Relationship.query.filter(
-                        Calendar_Relationship.user_id == user_id and
-                        Calendar_Relationship.calendar_id == id).first()
-            
-            if calendar_relationship.permission != "owner":
-                        return make_response({'error': 'User does not have permission to access this resource'}, 403)
+            if check_permission(user_id, id) != "owner":
+                return make_response({'error': 'User does not have permission to access this resource'}, 403)
 
             data = request.get_json()
             calendar = Calendar.query.filter(Calendar.id == id).one_or_none()
@@ -157,13 +163,9 @@ class CalendarByID(Resource):
 #if current user has permission
 #   if user is an owner, delete the current-calendar
     def delete(self, id):
-        if user_id := session['user_id']:
-            calendar_relationship = Calendar_Relationship.query.filter(
-                        Calendar_Relationship.user_id == user_id and
-                        Calendar_Relationship.calendar_id == id).first()
-        
-        if calendar_relationship.permission != "owner":
-            return make_response({'error': 'User does not have permission to access this resource'}, 403)
+        if user_id := session['user_id']:        
+            if check_permission(user_id, id) != "owner":
+                return make_response({'error': 'User does not have permission to access this resource'}, 403)
             
         if user_id and (calendar := Calendar.query.filter(Calendar.id == id).one_or_none()):
             db.session.delete(calendar)
@@ -188,17 +190,14 @@ class CalendarRelationshipByID(Resource):
                                 for user in calendar.users]
                 
         return shared_users, 200
-
+    
+#changed calendarID to id check for issues
 #CREATE CALENDAR RELATIONSHIP
 #if current user has permission, get data and find other user (to share with)
 #   try creating a new relationship, commit changes
     def post(self, calendarID):
         if user_id := session['user_id']:
-            calendar_relationship = Calendar_Relationship.query.filter(
-                        Calendar_Relationship.user_id == user_id and
-                        Calendar_Relationship.calendar_id == calendarID).first()
-    
-            if calendar_relationship.permission != "owner":
+            if check_permission(user_id, calendarID) != "owner":
                 return make_response({'error': 'User does not have permission to access this resource'}, 403)
                 
             data = request.get_json()
@@ -225,11 +224,11 @@ class CalendarRelationshipByID(Resource):
 class NoteByCalendarID(Resource):
 
 #READ NOTES
-#if current user, get note for current-calendar
+#if current user, get all notes for given calendar (calendar.notes)
     #return note_list of formatted note objects
     def get(self, calendarID):
         if session['user_id']:
-            notes = Note.query.filter(Note.calendar_id == calendarID).all()
+            notes = Calendar.query.filter(Calendar.id == calendarID).first().notes
 
         note_list = [{'id': note.id, 'year': note.year, 'month': note.month, 'day': note.day,
                       'title': note.title, 'content': note.content} for note in notes]
@@ -239,12 +238,8 @@ class NoteByCalendarID(Resource):
 #if current user has permission, get data (format data)
 #   try creating new Note, commit changes
     def post(self, calendarID):
-        if user_id := session['user_id']:
-            calendar_relationship = Calendar_Relationship.query.filter(
-                        Calendar_Relationship.user_id == user_id and
-                        Calendar_Relationship.calendar_id == calendarID).first()
-        
-            if calendar_relationship.permission != "owner":
+        if user_id := session['user_id']:        
+            if check_permission(user_id, calendarID) != "owner":
                 return make_response({'error': 'User does not have permission to access this resource'}, 403)
             
             data = request.get_json()
@@ -283,11 +278,7 @@ class NoteByID(Resource):
                 if currentNote is None:
                     return make_response({'error': 'Note not found'}, 404)
                 
-            calendar_relationship = Calendar_Relationship.query.filter(
-                        Calendar_Relationship.user_id == user_id and
-                        Calendar_Relationship.calendar_id == currentNote.calendar_id).first()
-        
-            if calendar_relationship.permission != "owner":
+            if check_permission(user_id, currentNote.calendar_id) != "owner":
                 return make_response({'error': 'User does not have permission to access this resource'}, 403)
 
             data = request.get_json()
@@ -313,12 +304,8 @@ class NoteByID(Resource):
             if currentNote := Note.query.filter(Note.id == noteID).one_or_none():
                 if currentNote is None:
                     return make_response({'error': 'Note not found'}, 404)
-                
-            calendar_relationship = Calendar_Relationship.query.filter(
-                        Calendar_Relationship.user_id == user_id and
-                        Calendar_Relationship.calendar_id == currentNote.calendar_id).first()
-        
-            if calendar_relationship.permission != "owner":
+
+            if check_permission(user_id, currentNote.calendar_id) != "owner":
                 return make_response({'error': 'User does not have permission to access this resource'}, 403)
             
         db.session.delete(currentNote)
