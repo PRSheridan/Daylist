@@ -8,7 +8,7 @@
 html, body {
     height: 100%;
     margin: 0;
-    padding: 0;
+    padding:m 0;
 	background-color: #f1f2ed;;
 }
 
@@ -42,7 +42,8 @@ html, body {
 
 #app-container {
 	background-color: #fff;
-	height: 88vh;
+	min-height: 800px;
+	height: 100vh;
 	margin-left: 3vw;
 	margin-right: 3vw;
 }
@@ -145,6 +146,8 @@ hr.rounded {
 #month-container {
 	padding: 40px;
 	margin:auto;
+	height:auto;
+	min-height: 800px;
 	width: 600px;
 	position: relative;
 }
