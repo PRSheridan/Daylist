@@ -191,7 +191,6 @@ class CalendarRelationshipByID(Resource):
                 
         return shared_users, 200
     
-#changed calendarID to id check for issues
 #CREATE CALENDAR RELATIONSHIP
 #if current user has permission, get data and find other user (to share with)
 #   try creating a new relationship, commit changes
